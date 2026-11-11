@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ESP32 Config</title>
+    <link id="stylesheet" rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-block">
+      <div class="title">
+        <h1>Config</h1>
+      </div>
+
+      <p id="status" class="status unpaired">BLE: checking...</p>
+
+      <p class="nav"><a id="controllerLink" href="#">Controller</a></p>
+
+      <h2 class="section-title">Device</h2>
+
+      <form id="deviceForm" class="wifi-form">
+        <label class="wifi-field">
+          SoftAP name
+          <input id="softApSsid" type="text" maxlength="32" autocomplete="off" required />
+        </label>
+        <label class="wifi-field">
+          Bluetooth name
+          <input id="bleName" type="text" maxlength="29" autocomplete="off" required />
+        </label>
+        <button type="submit" id="deviceSave" class="combo-submit">Save Device</button>
+      </form>
+
+      <h2 class="section-title">WiFi</h2>
+
+      <form id="wifiForm" class="wifi-form">
+        <label class="wifi-field">
+          SSID
+          <input id="wifiSsid" type="text" maxlength="32" autocomplete="off" required />
+        </label>
+        <label class="wifi-field">
+          Password
+          <input
+            id="wifiPassword"
+            type="password"
+            maxlength="64"
+            autocomplete="new-password"
+            placeholder="enter to set/change"
+          />
+        </label>
+        <button type="submit" id="wifiSave" class="combo-submit">Save WiFi</button>
+      </form>
+
+      <div class="table-wrap">
+        <table class="config-table">
+          <colgroup>
+            <col style="width: 50px" />
+            <col style="width: 50px" />
+            <col style="width: 50px" />
+            <col style="width: 50px" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Slot</th>
+              <th>Name</th>
+              <th>Mapping</th>
+              <th>Reset</th>
+            </tr>
+          </thead>
+          <tbody id="slotsBody"></tbody>
+        </table>
+      </div>
+
+      <h2 class="section-title">Combos</h2>
+
+      <form id="comboForm" class="combo-form">
+        <div class="combo-name-row">
+          <label class="combo-name-label">
+            Name
+            <input id="comboName" type="text" maxlength="20" autocomplete="off" />
+          </label>
+          <label class="combo-at-once">
+            <input id="comboAtOnce" type="checkbox" />
+            at once
+          </label>
+          <label class="combo-name-label">
+            hold Time
+            <input id="comboHoldTime" class="combo-time" type="number" min="0" max="65535" step="1" value="0" />
+          </label>
+          <label class="combo-name-label">
+            wait after tap
+            <input id="comboWait" class="combo-time" type="number" min="0" max="65535" step="1" value="0" />
+          </label>
+        </div>
+
+        <div class="combo-toolbar">
+          <button type="button" id="addKey" class="combo-btn" disabled>Add key</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="combo-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Order</th>
+                <th>Key</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="comboBody">
+              <tr class="combo-empty-row">
+                <td colspan="4" class="combo-empty">Add a key to start the combo.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button type="submit" class="combo-submit">Create</button>
+      </form>
+
+      <ul id="comboList" class="combo-list"></ul>
+
+      <p id="feedback" class="feedback"></p>
+    </div>
+
+    <script>
+      const API_BASE = "";
+      const SLOT_COUNT = 7;
+
+      // Keep relative style.css so local edits apply when opening this file from disk.
+      document.getElementById("controllerLink").href = API_BASE + "/";
+
+      const statusEl = document.getElementById("status");
+      const feedbackEl = document.getElementById("feedback");
+      const slotsBody = document.getElementById("slotsBody");
+      const deviceForm = document.getElementById("deviceForm");
+      const softApSsid = document.getElementById("softApSsid");
+      const bleName = document.getElementById("bleName");
+      const deviceSave = document.getElementById("deviceSave");
+      const wifiForm = document.getElementById("wifiForm");
+      const wifiSsid = document.getElementById("wifiSsid");
+      const wifiPassword = document.getElementById("wifiPassword");
+      const wifiSave = document.getElementById("wifiSave");
+
+      let catalog = [];
+      let slots = [];
+      let saving = false;
+      let deviceSaving = false;
+      let wifiSaving = false;
+
+      function setFeedback(text, isError) {
+        feedbackEl.textContent = text || "";
+        feedbackEl.className = "feedback" + (isError ? " error" : "");
+      }
+
+      function refreshStatus() {
+        fetch(API_BASE + "/status")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.paired) {
+              statusEl.textContent = "BLE: paired";
+              statusEl.className = "status paired";
+            } else {
+              statusEl.textContent = "BLE: not paired";
+              statusEl.className = "status unpaired";
+            }
+          })
+          .catch(function () {
+            statusEl.textContent = "BLE: status unavailable";
+            statusEl.className = "status unpaired";
+          });
+      }
+
+      function groupCatalog(keys) {
+        var groups = [];
+        var map = {};
+        keys.forEach(function (key) {
+          if (!map[key.group]) {
+            map[key.group] = [];
+            groups.push({ name: key.group, keys: map[key.group] });
+          }
+          map[key.group].push(key);
+        });
+        return groups;
+      }
+
+      function buildSelectOptions(selectedId, skipVirtual) {
+        var source = catalog;
+        if (skipVirtual) {
+          source = catalog.filter(function (key) {
+            return key.kind !== "virtual";
+          });
+        }
+        var groups = groupCatalog(source);
+        var html = "";
+        groups.forEach(function (group) {
+          html += '<optgroup label="' + group.name + '">';
+          group.keys.forEach(function (key) {
+            html +=
+              '<option value="' +
+              key.id +
+              '"' +
+              (key.id === selectedId ? " selected" : "") +
+              ">" +
+              key.label +
+              "</option>";
+          });
+          html += "</optgroup>";
+        });
+        return html;
+      }
+
+      function updateNameCell(slotIndex, label) {
+        var row = slotsBody.querySelector('tr[data-slot="' + slotIndex + '"]');
+        if (!row) {
+          return;
+        }
+        row.querySelector(".name-cell").textContent = label;
+      }
+
+      function collectSlotsPayload() {
+        var params = new URLSearchParams();
+        for (var i = 0; i < SLOT_COUNT; i++) {
+          var row = slotsBody.querySelector('tr[data-slot="' + i + '"]');
+          var id = row.querySelector("select").value;
+          params.set("s" + i, id);
+          params.set("m" + i, "0");
+        }
+        return params;
+      }
+
+      function saveSlots() {
+        if (saving) {
+          return;
+        }
+        saving = true;
+        var params = collectSlotsPayload();
+        fetch(API_BASE + "/api/slots", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: params.toString(),
+        })
+          .then(function (response) {
+            return response.json().then(function (data) {
+              return { ok: response.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (result.ok && result.data.ok && result.data.slots) {
+              slots = result.data.slots;
+              slots.forEach(function (slot) {
+                updateNameCell(slot.slot, slot.label);
+              });
+              setFeedback("Mapping saved", false);
+            } else {
+              var err = (result.data && result.data.error) || "save_failed";
+              setFeedback("Error: " + err, true);
+            }
+          })
+          .catch(function (err) {
+            setFeedback("Save failed", true);
+            console.error(err);
+          })
+          .finally(function () {
+            saving = false;
+          });
+      }
+
+      function resetSlot(slotIndex) {
+        if (saving) {
+          return;
+        }
+        saving = true;
+        fetch(API_BASE + "/api/reset_slot?slot=" + encodeURIComponent(slotIndex), {
+          method: "POST",
+        })
+          .then(function (response) {
+            return response.json().then(function (data) {
+              return { ok: response.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (result.ok && result.data.ok && result.data.slots) {
+              slots = result.data.slots;
+              renderSlots();
+              setFeedback("Reset slot " + slotIndex, false);
+            } else {
+              var err = (result.data && result.data.error) || "reset_failed";
+              setFeedback("Error: " + err, true);
+            }
+          })
+          .catch(function (err) {
+            setFeedback("Reset failed", true);
+            console.error(err);
+          })
+          .finally(function () {
+            saving = false;
+          });
+      }
+
+      function renderSlots() {
+        var html = "";
+        for (var i = 0; i < SLOT_COUNT; i++) {
+          var slot = slots[i] || {
+            id: catalog[0] ? catalog[0].id : "",
+            label: "—",
+          };
+          html +=
+            '<tr data-slot="' +
+            i +
+            '">' +
+            '<td class="slot-cell">' +
+            i +
+            "</td>" +
+            '<td class="name-cell">' +
+            slot.label +
+            "</td>" +
+            '<td class="mapping-cell"><select>' +
+            buildSelectOptions(slot.id) +
+            "</select></td>" +
+            '<td class="reset-cell"><button type="button" class="reset-slot">Reset</button></td>' +
+            "</tr>";
+        }
+        slotsBody.innerHTML = html;
+
+        slotsBody.querySelectorAll("tr").forEach(function (row) {
+          var slotIndex = parseInt(row.getAttribute("data-slot"), 10);
+          row.querySelector("select").addEventListener("change", function () {
+            saveSlots();
+          });
+          row.querySelector(".reset-slot").addEventListener("click", function () {
+            resetSlot(slotIndex);
+          });
+        });
+      }
+
+      const CHAIN_MAX = 30;
+      const HOLD_MAX = 6;
+      const MODIFIER_IDS = [
+        "KEY_LCTRL",
+        "KEY_LSHIFT",
+        "KEY_LALT",
+        "KEY_LGUI",
+        "KEY_RCTRL",
+        "KEY_RSHIFT",
+        "KEY_RALT",
+        "KEY_RGUI",
+      ];
+      const comboForm = document.getElementById("comboForm");
+      const comboName = document.getElementById("comboName");
+      const comboAtOnce = document.getElementById("comboAtOnce");
+      const comboHoldTime = document.getElementById("comboHoldTime");
+      const comboWait = document.getElementById("comboWait");
+      const comboBody = document.getElementById("comboBody");
+      const comboList = document.getElementById("comboList");
+      const addKeyBtn = document.getElementById("addKey");
+
+      let combos = [];
+      let comboMax = 20;
+      let dragRow = null;
+
+      function keyRows() {
+        return comboBody.querySelectorAll("tr[data-key-row]");
+      }
+
+      function showEmptyState() {
+        if (keyRows().length > 0) {
+          return;
+        }
+        comboBody.innerHTML =
+          '<tr class="combo-empty-row"><td colspan="4" class="combo-empty">Add a key to start the combo.</td></tr>';
+      }
+
+      function isModifierId(id) {
+        return MODIFIER_IDS.indexOf(id) >= 0;
+      }
+
+      function nonModifierCount() {
+        var count = 0;
+        keyRows().forEach(function (row) {
+          if (!isModifierId(row.querySelector("select").value)) {
+            count++;
+          }
+        });
+        return count;
+      }
+
+      function atOnceTooMany() {
+        return comboAtOnce.checked && nonModifierCount() > HOLD_MAX;
+      }
+
+      function canAddKey() {
+        if (catalog.length === 0 || keyRows().length >= CHAIN_MAX) {
+          return false;
+        }
+        if (comboAtOnce.checked && nonModifierCount() >= HOLD_MAX) {
+          return false;
+        }
+        return true;
+      }
+
+      var AT_ONCE_HOLD_MS = 200;
+
+      function syncTimingInputs() {
+        var atOnce = comboAtOnce.checked;
+        if (atOnce) {
+          comboHoldTime.value = String(AT_ONCE_HOLD_MS);
+          comboWait.value = "0";
+        }
+        comboHoldTime.disabled = atOnce;
+        comboWait.disabled = atOnce;
+      }
+
+      function refreshRows() {
+        var rows = keyRows();
+        rows.forEach(function (row, index) {
+          row.querySelector(".order-cell").textContent = String(index + 1);
+          row.querySelector(".move-up").disabled = index === 0;
+          row.querySelector(".move-down").disabled = index === rows.length - 1;
+        });
+        addKeyBtn.disabled = !canAddKey();
+        syncTimingInputs();
+      }
+
+      function moveRow(row, direction) {
+        var sibling = direction < 0 ? row.previousElementSibling : row.nextElementSibling;
+        if (!sibling || !sibling.hasAttribute("data-key-row")) {
+          return;
+        }
+        if (direction < 0) {
+          comboBody.insertBefore(row, sibling);
+        } else {
+          comboBody.insertBefore(sibling, row);
+        }
+        refreshRows();
+      }
+
+      function placeDragRow(targetRow, clientY) {
+        if (!dragRow || !targetRow || dragRow === targetRow) {
+          return;
+        }
+        var rect = targetRow.getBoundingClientRect();
+        var placeAfter = clientY > rect.top + rect.height / 2;
+        if (placeAfter) {
+          comboBody.insertBefore(dragRow, targetRow.nextElementSibling);
+        } else {
+          comboBody.insertBefore(dragRow, targetRow);
+        }
+        refreshRows();
+      }
+
+      function bindDrag(row) {
+        var handle = row.querySelector(".drag-handle");
+        handle.addEventListener("dragstart", function (event) {
+          dragRow = row;
+          row.classList.add("dragging");
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", "key-row");
+        });
+        handle.addEventListener("dragend", function () {
+          row.classList.remove("dragging");
+          dragRow = null;
+          refreshRows();
+        });
+        row.addEventListener("dragover", function (event) {
+          if (!dragRow) {
+            return;
+          }
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+          placeDragRow(row, event.clientY);
+        });
+      }
+
+      function addKeyRow() {
+        if (!canAddKey()) {
+          return;
+        }
+        var empty = comboBody.querySelector(".combo-empty-row");
+        if (empty) {
+          empty.remove();
+        }
+
+        var row = document.createElement("tr");
+        row.setAttribute("data-key-row", "1");
+        row.innerHTML =
+          '<td class="drag-cell"><span class="drag-handle" draggable="true" role="button" aria-label="Drag to reorder" title="Drag to reorder">⋮⋮</span></td>' +
+          '<td class="order-cell"></td>' +
+          '<td><select>' +
+          buildSelectOptions("", true) +
+          "</select></td>" +
+          '<td class="row-actions">' +
+          '<button type="button" class="combo-btn move-up">Up</button>' +
+          '<button type="button" class="combo-btn move-down">Down</button>' +
+          '<button type="button" class="combo-btn remove">Remove</button>' +
+          "</td>";
+
+        row.querySelector(".move-up").addEventListener("click", function () {
+          moveRow(row, -1);
+        });
+        row.querySelector(".move-down").addEventListener("click", function () {
+          moveRow(row, 1);
+        });
+        row.querySelector(".remove").addEventListener("click", function () {
+          row.remove();
+          showEmptyState();
+          refreshRows();
+        });
+        row.querySelector("select").addEventListener("change", refreshRows);
+        bindDrag(row);
+        comboBody.appendChild(row);
+        refreshRows();
+      }
+
+      function msValue(input) {
+        var value = parseInt(input.value, 10);
+        if (isNaN(value) || value < 0) {
+          return 0;
+        }
+        if (value > 65535) {
+          return 65535;
+        }
+        return value;
+      }
+
+      function labelFor(id) {
+        for (var i = 0; i < catalog.length; i++) {
+          if (catalog[i].id === id) {
+            return catalog[i].label;
+          }
+        }
+        return id;
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function renderCombos() {
+        if (!combos.length) {
+          comboList.innerHTML = '<li><span class="combo-saved-keys">No combos saved.</span></li>';
+          return;
+        }
+        var html = "";
+        combos.forEach(function (combo) {
+          var labels = (combo.keys || [])
+            .map(function (key) {
+              return labelFor(key.id);
+            })
+            .join(", ");
+          html +=
+            '<li data-index="' +
+            combo.index +
+            '">' +
+            '<span class="combo-saved-name">' +
+            escapeHtml(combo.name) +
+            "</span>" +
+            '<span class="combo-saved-mode">' +
+            (combo.hold ? "at once" : "in order") +
+            "</span>" +
+            '<span class="combo-saved-keys">' +
+            escapeHtml(labels) +
+            "</span>" +
+            '<span class="row-actions">' +
+            '<button type="button" class="combo-btn combo-run">Run</button>' +
+            '<button type="button" class="combo-btn remove combo-delete">Delete</button>' +
+            "</span>" +
+            "</li>";
+        });
+        comboList.innerHTML = html;
+      }
+
+      function applyComboResult(result, successText) {
+        if (result.ok && result.data.ok && result.data.combos) {
+          combos = result.data.combos;
+          if (typeof result.data.max === "number") {
+            comboMax = result.data.max;
+          }
+          renderCombos();
+          setFeedback(successText, false);
+          return true;
+        }
+        var err = (result.data && result.data.error) || "save_failed";
+        setFeedback("Error: " + err, true);
+        return false;
+      }
+
+      function postCombo(path, params) {
+        if (saving) {
+          return Promise.resolve(null);
+        }
+        saving = true;
+        return fetch(API_BASE + path, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: params.toString(),
+        })
+          .then(function (response) {
+            return response.json().then(function (data) {
+              return { ok: response.ok, data: data };
+            });
+          })
+          .finally(function () {
+            saving = false;
+          });
+      }
+
+      function resetComboForm() {
+        comboName.value = "";
+        comboAtOnce.checked = false;
+        comboHoldTime.value = "0";
+        comboWait.value = "0";
+        comboBody.innerHTML =
+          '<tr class="combo-empty-row"><td colspan="4" class="combo-empty">Add a key to start the combo.</td></tr>';
+        refreshRows();
+      }
+
+      addKeyBtn.addEventListener("click", addKeyRow);
+      comboAtOnce.addEventListener("change", function () {
+        if (!comboAtOnce.checked) {
+          comboHoldTime.value = "0";
+          comboWait.value = "0";
+        }
+        syncTimingInputs();
+      });
+
+      comboForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var name = comboName.value.trim();
+        var rows = keyRows();
+        if (!name) {
+          setFeedback("Enter a name", true);
+          return;
+        }
+        if (name.length > 20) {
+          setFeedback("Name can be at most 20 characters", true);
+          return;
+        }
+        if (rows.length === 0) {
+          setFeedback("Add at least one key", true);
+          return;
+        }
+        if (rows.length > CHAIN_MAX || atOnceTooMany()) {
+          setFeedback("Error: too_many_keys", true);
+          return;
+        }
+        if (combos.length >= comboMax) {
+          setFeedback("Error: full", true);
+          return;
+        }
+
+        var keys = [];
+        var atOnce = comboAtOnce.checked;
+        rows.forEach(function (row) {
+          keys.push(row.querySelector("select").value);
+        });
+
+        var params = new URLSearchParams();
+        params.set("name", name);
+        params.set("hold", atOnce ? "1" : "0");
+        params.set("keys", keys.join(","));
+        params.set("holdTime", atOnce ? String(AT_ONCE_HOLD_MS) : String(msValue(comboHoldTime)));
+        params.set("waitAfterTap", atOnce ? "0" : String(msValue(comboWait)));
+
+        postCombo("/api/combos", params)
+          .then(function (result) {
+            if (!result) {
+              return;
+            }
+            if (applyComboResult(result, "Combo saved")) {
+              resetComboForm();
+            }
+          })
+          .catch(function (err) {
+            setFeedback("Save failed", true);
+            console.error(err);
+          });
+      });
+
+      comboList.addEventListener("click", function (event) {
+        var row = event.target.closest("li[data-index]");
+        if (!row) {
+          return;
+        }
+        var index = row.getAttribute("data-index");
+        if (event.target.classList.contains("combo-delete")) {
+          var params = new URLSearchParams();
+          params.set("index", index);
+          postCombo("/api/combos_delete", params)
+            .then(function (result) {
+              if (!result) {
+                return;
+              }
+              applyComboResult(result, "Combo deleted");
+            })
+            .catch(function (err) {
+              setFeedback("Delete failed", true);
+              console.error(err);
+            });
+        } else if (event.target.classList.contains("combo-run")) {
+          var fireParams = new URLSearchParams();
+          fireParams.set("index", index);
+          postCombo("/api/combos_fire", fireParams)
+            .then(function (result) {
+              if (!result) {
+                return;
+              }
+              if (result.ok && result.data.ok) {
+                setFeedback("Combo queued", false);
+              } else {
+                var err = (result.data && result.data.error) || "fire_failed";
+                setFeedback("Error: " + err, true);
+              }
+            })
+            .catch(function (err) {
+              setFeedback("Run failed", true);
+              console.error(err);
+            });
+        }
+      });
+
+      function postRebootForm(url, params, onFail) {
+        fetch(API_BASE + url, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: params.toString(),
+        })
+          .then(function (response) {
+            return response.json().then(function (data) {
+              return { ok: response.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (result.ok && result.data && result.data.ok) {
+              setFeedback("Saved — rebooting...", false);
+              return;
+            }
+            onFail((result.data && result.data.error) || "save_failed");
+          })
+          .catch(function (err) {
+            // Device may reboot before the response arrives.
+            setFeedback("Saved — rebooting...", false);
+            console.error(err);
+          });
+      }
+
+      deviceForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (deviceSaving) {
+          return;
+        }
+
+        var ap = softApSsid.value.trim();
+        var ble = bleName.value.trim();
+        if (!ap || !ble) {
+          setFeedback("Enter SoftAP and Bluetooth names", true);
+          return;
+        }
+
+        deviceSaving = true;
+        deviceSave.disabled = true;
+        softApSsid.disabled = true;
+        bleName.disabled = true;
+        setFeedback("Saving device...", false);
+
+        var params = new URLSearchParams();
+        params.set("softApSsid", ap);
+        params.set("bleName", ble);
+
+        postRebootForm("/api/device", params, function (err) {
+          deviceSaving = false;
+          deviceSave.disabled = false;
+          softApSsid.disabled = false;
+          bleName.disabled = false;
+          setFeedback("Error: " + err, true);
+        });
+      });
+
+      wifiForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (wifiSaving) {
+          return;
+        }
+
+        var ssid = wifiSsid.value.trim();
+        if (!ssid) {
+          setFeedback("Enter a WiFi SSID", true);
+          return;
+        }
+
+        wifiSaving = true;
+        wifiSave.disabled = true;
+        wifiSsid.disabled = true;
+        wifiPassword.disabled = true;
+        setFeedback("Saving WiFi...", false);
+
+        var params = new URLSearchParams();
+        params.set("ssid", ssid);
+        params.set("password", wifiPassword.value);
+
+        postRebootForm("/api/wifi", params, function (err) {
+          wifiSaving = false;
+          wifiSave.disabled = false;
+          wifiSsid.disabled = false;
+          wifiPassword.disabled = false;
+          setFeedback("Error: " + err, true);
+        });
+      });
+
+      function loadPage() {
+        Promise.all([
+          fetch(API_BASE + "/api/catalog").then(function (r) {
+            return r.json();
+          }),
+          fetch(API_BASE + "/api/slots").then(function (r) {
+            return r.json();
+          }),
+          fetch(API_BASE + "/api/combos").then(function (r) {
+            return r.json();
+          }),
+          fetch(API_BASE + "/api/wifi").then(function (r) {
+            return r.json();
+          }),
+          fetch(API_BASE + "/api/device").then(function (r) {
+            return r.json();
+          }),
+        ])
+          .then(function (results) {
+            catalog = results[0].keys || [];
+            slots = results[1].slots || [];
+            combos = results[2].combos || [];
+            if (typeof results[2].max === "number") {
+              comboMax = results[2].max;
+            }
+            wifiSsid.value = (results[3] && results[3].ssid) || "";
+            wifiPassword.value = "";
+            softApSsid.value = (results[4] && results[4].softApSsid) || "";
+            bleName.value = (results[4] && results[4].bleName) || "";
+            if (!catalog.length) {
+              setFeedback("Error: empty key catalog", true);
+              return;
+            }
+            renderSlots();
+            renderCombos();
+            addKeyBtn.disabled = !canAddKey();
+            setFeedback("", false);
+          })
+          .catch(function (err) {
+            setFeedback("Failed to load key map", true);
+            console.error(err);
+          });
+      }
+
+      refreshStatus();
+      setInterval(refreshStatus, 2000);
+      loadPage();
+    </script>
+  </body>
+</html>

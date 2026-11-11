@@ -1,0 +1,421 @@
+html,
+body {
+  min-height: 100%;
+  background: rgb(46, 44, 44);
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  font-size: 16px;
+  color: #eee;
+}
+
+.main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 40px;
+  box-sizing: border-box;
+}
+
+.title {
+  margin-bottom: 8px;
+}
+
+h1 {
+  margin: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.status {
+  margin: 8px 0 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.status.paired {
+  background: #1f5c3a;
+}
+
+.status.unpaired {
+  background: #5c3a1f;
+}
+
+.nav {
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+
+.nav a {
+  color: #6aa0d8;
+}
+
+.table-wrap {
+  width: auto;
+  overflow-x: auto;
+}
+
+.config-table {
+  table-layout: fixed;
+  width: 1000px;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid #bdb1b1;
+}
+
+.config-table col {
+  width: 200px;
+}
+
+.config-table th,
+.config-table td {
+  box-sizing: border-box;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  padding: 8px 2px;
+  border-bottom: 1px solid #555;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 20px;
+}
+
+.config-table th {
+  height: 50px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #bbb;
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.config-table tbody tr {
+  height: 60px;
+}
+
+.config-table .slot-cell {
+  color: #ccc;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.config-table .name-cell {
+  color: #eee;
+  text-align: center;
+}
+
+.config-table .reset-cell {
+  text-align: center;
+}
+
+.config-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.config-table .mapping-cell {
+  text-align: center;
+}
+
+.config-table .mapping-cell select {
+  text-align: center;
+  width: 180px;
+  height: 40px;
+  max-width: 200px;
+  box-sizing: border-box;
+  padding: 2px 0;
+  border-radius: 4px;
+  border: 1px solid #666;
+  background: #1e1e1e;
+  color: #eee;
+  font-size: 20px;
+}
+
+.reset-slot {
+  appearance: none;
+  width: 80px;
+  padding: 4px 0;
+  border-radius: 4px;
+  border: 1px solid #8a6a3a;
+  background: rgba(90, 60, 20, 0.75);
+  color: #eee;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.reset-slot:active {
+  background: rgba(120, 80, 30, 0.9);
+}
+
+.feedback {
+  min-height: 1.2em;
+  margin-top: 18px;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.feedback.error {
+  color: #f0a0a0;
+}
+
+.section-title {
+  margin: 28px 0 8px;
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wifi-form {
+  width: 420px;
+  max-width: 100%;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wifi-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wifi-field input {
+  height: 40px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #666;
+  background: #1e1e1e;
+  color: #eee;
+  font-size: 18px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.combo-form {
+  width: 980px;
+  max-width: 100%;
+  margin-top: 8px;
+}
+
+.combo-name-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.combo-name-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.combo-name-label input {
+  height: 40px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #666;
+  background: #1e1e1e;
+  color: #eee;
+  font-size: 18px;
+}
+
+.combo-at-once {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #eee;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.combo-at-once input {
+  width: 18px;
+  height: 18px;
+}
+
+.combo-toolbar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.combo-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid #bdb1b1;
+}
+
+.combo-table th,
+.combo-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #555;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.combo-table th {
+  background: rgba(255, 255, 255, 0.08);
+  color: #bbb;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.combo-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.combo-table .drag-cell {
+  width: 36px;
+  padding-left: 8px;
+  padding-right: 0;
+  text-align: center;
+}
+
+.drag-handle {
+  display: inline-block;
+  color: #888;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: -2px;
+  cursor: grab;
+  user-select: none;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.combo-table tr.dragging {
+  opacity: 0.45;
+}
+
+.combo-table .order-cell {
+  width: 64px;
+  color: #ccc;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.combo-table select,
+.combo-table .combo-time {
+  width: 100%;
+  height: 40px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid #666;
+  background: #1e1e1e;
+  color: #eee;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.combo-table .time-cell {
+  width: 120px;
+}
+
+.combo-table .combo-time:disabled {
+  opacity: 0.45;
+}
+
+.combo-table .row-actions {
+  width: 220px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.combo-btn {
+  appearance: none;
+  margin-left: 6px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #666;
+  background: #2a2a2a;
+  color: #eee;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.combo-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.combo-btn.remove {
+  border-color: #8a6a3a;
+  background: rgba(90, 60, 20, 0.75);
+}
+
+.combo-submit {
+  margin-top: 16px;
+  appearance: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+  border: 1px solid #4a7aaa;
+  background: rgba(40, 90, 140, 0.55);
+  color: #eee;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.combo-empty {
+  color: #888;
+  font-size: 14px;
+}
+
+.combo-list {
+  list-style: none;
+  width: 980px;
+  max-width: 100%;
+  margin: 18px 0 0;
+  padding: 0;
+}
+
+.combo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #555;
+}
+
+.combo-list .combo-saved-name {
+  min-width: 120px;
+  font-size: 16px;
+}
+
+.combo-list .combo-saved-keys {
+  flex: 1;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.combo-list .combo-saved-mode {
+  color: #9cf;
+  font-size: 14px;
+  white-space: nowrap;
+}
