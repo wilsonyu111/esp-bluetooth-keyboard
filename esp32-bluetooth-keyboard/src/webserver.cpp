@@ -1,6 +1,7 @@
 #include "webserver.h"
 #include "keymap.h"
 #include "combo.h"
+#include "helldiver.h"
 #include "messageQueue.h"
 #include "wifi_config.h"
 #include "device_config.h"
@@ -124,6 +125,20 @@ void initWebServer(uint16_t port) {
             }
         });
 
+        auto serveHelldiver = [](AsyncWebServerRequest* request) {
+            if (LittleFS.exists("/helldiver.html")) {
+                request->send(LittleFS, "/helldiver.html", "text/html");
+            } else {
+                Serial.println("ERROR: helldiver.html not found in LittleFS");
+                request->send(404, "text/plain", "File not found: helldiver.html. Please upload filesystem.");
+            }
+        };
+
+        server->on("/helldiver", HTTP_GET, serveHelldiver);
+        server->on("/helldiver.html", HTTP_GET, serveHelldiver);
+        // Prefer the real file; gzip-first probes for missing *.png.gz and spams LittleFS open errors.
+        server->serveStatic("/hd-icons/", LittleFS, "/hd-icons/").setTryGzipFirst(false);
+
         server->on(AsyncURIMatcher::all(), HTTP_OPTIONS, [](AsyncWebServerRequest* request) {
             request->send(204);
         });
@@ -157,6 +172,65 @@ void initWebServer(uint16_t port) {
                 return;
             }
             request->send(200, "application/json", String("{\"ok\":true,") + keymapSlotsJson().substring(1));
+        });
+
+        server->on("/api/helldiver", HTTP_GET, [](AsyncWebServerRequest* request) {
+            request->send(200, "application/json", helldiverListJson());
+        });
+
+        server->on("/api/helldiver_fire", HTTP_POST, [](AsyncWebServerRequest* request) {
+            const AsyncWebParameter* indexParam = getRequestParam(request, "index");
+            if (indexParam == nullptr) {
+                request->send(400, "application/json", "{\"ok\":false,\"error\":\"missing_index\"}");
+                return;
+            }
+
+            int index = indexParam->value().toInt();
+            if (index < 0 || index >= (int)helldiverCount()) {
+                request->send(400, "application/json", "{\"ok\":false,\"error\":\"invalid_index\"}");
+                return;
+            }
+
+            uint16_t holdTime = 100;
+            uint16_t waitAfterTap = 100;
+            const AsyncWebParameter* holdParam = getRequestParam(request, "holdTime");
+            const AsyncWebParameter* waitParam = getRequestParam(request, "waitAfterTap");
+            if (holdParam != nullptr) {
+                long value = holdParam->value().toInt();
+                if (value < 0) {
+                    value = 0;
+                }
+                if (value > 65535) {
+                    value = 65535;
+                }
+                holdTime = (uint16_t)value;
+            }
+            if (waitParam != nullptr) {
+                long value = waitParam->value().toInt();
+                if (value < 0) {
+                    value = 0;
+                }
+                if (value > 65535) {
+                    value = 65535;
+                }
+                waitAfterTap = (uint16_t)value;
+            }
+
+            if (keyboard == nullptr || !keyboard->isPaired()) {
+                request->send(503, "application/json", "{\"ok\":false,\"error\":\"not_paired\"}");
+                return;
+            }
+
+            if (!helldiverFire((uint8_t)index, holdTime, waitAfterTap)) {
+                if (!queueHasRoom(1)) {
+                    request->send(503, "application/json", "{\"ok\":false,\"error\":\"queue_full\"}");
+                } else {
+                    request->send(400, "application/json", "{\"ok\":false,\"error\":\"fire_failed\"}");
+                }
+                return;
+            }
+
+            request->send(200, "application/json", "{\"ok\":true}");
         });
 
         server->on("/api/combos", HTTP_GET, [](AsyncWebServerRequest* request) {

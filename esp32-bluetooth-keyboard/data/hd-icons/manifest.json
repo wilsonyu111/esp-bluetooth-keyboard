@@ -1,0 +1,430 @@
+{
+  "source": "https://helldivers.fandom.com/wiki/Stratagem_Codes",
+  "images": [
+    {
+      "wiki": "\"Guard Dog\" Icon.png",
+      "file": "hd-icons/guard_dog_icon.png",
+      "bytes": 4501
+    },
+    {
+      "wiki": "\"Guard Dog\" K-9 Icon.png",
+      "file": "hd-icons/guard_dog_k-9_icon.png",
+      "bytes": 4278
+    },
+    {
+      "wiki": "\"Guard Dog\" Rover Icon.png",
+      "file": "hd-icons/guard_dog_rover_icon.png",
+      "bytes": 5220
+    },
+    {
+      "wiki": "'Guard Dog' Dog Breath Icon.png",
+      "file": "hd-icons/guard_dog_dog_breath_icon.png",
+      "bytes": 5107
+    },
+    {
+      "wiki": "Airburst Rocket Launcher Icon.png",
+      "file": "hd-icons/airburst_rocket_icon.png",
+      "bytes": 26360
+    },
+    {
+      "wiki": "Anti-Materiel Rifle Icon.png",
+      "file": "hd-icons/anti-materiel_rifle_icon.png",
+      "bytes": 5329
+    },
+    {
+      "wiki": "Anti-Personnel Minefield Icon.png",
+      "file": "hd-icons/ap_minefield_icon.png",
+      "bytes": 2558
+    },
+    {
+      "wiki": "Anti-Tank Emplacement Icon.png",
+      "file": "hd-icons/anti-tank_emplacement_icon.png",
+      "bytes": 3941
+    },
+    {
+      "wiki": "Anti-Tank Mines Icon.png",
+      "file": "hd-icons/anti-tank_mines_icon.png",
+      "bytes": 3588
+    },
+    {
+      "wiki": "Arc Thrower Icon.png",
+      "file": "hd-icons/arc_thrower_icon.png",
+      "bytes": 5419
+    },
+    {
+      "wiki": "Autocannon Icon.png",
+      "file": "hd-icons/autocannon_icon.png",
+      "bytes": 3968
+    },
+    {
+      "wiki": "Autocannon Sentry Icon.png",
+      "file": "hd-icons/autocannon_sentry_icon.png",
+      "bytes": 5660
+    },
+    {
+      "wiki": "Ballistic Shield Backpack Icon.png",
+      "file": "hd-icons/ballistic_shield_icon.png",
+      "bytes": 4232
+    },
+    {
+      "wiki": "Bastion Icon.png",
+      "file": "hd-icons/bastion_icon.png",
+      "bytes": 5549
+    },
+    {
+      "wiki": "Commando Icon.png",
+      "file": "hd-icons/commando_icon.png",
+      "bytes": 3230
+    },
+    {
+      "wiki": "De-Escalator Icon.png",
+      "file": "hd-icons/de-escalator_icon.png",
+      "bytes": 4416
+    },
+    {
+      "wiki": "Directional Shield Icon.png",
+      "file": "hd-icons/directional_shield_icon.png",
+      "bytes": 3816
+    },
+    {
+      "wiki": "Down Arrow.png",
+      "file": "hd-icons/down_arrow.png",
+      "bytes": 33456
+    },
+    {
+      "wiki": "EMS Mortar Sentry Icon.png",
+      "file": "hd-icons/ems_mortar_sentry_icon.png",
+      "bytes": 7958
+    },
+    {
+      "wiki": "Eagle 110MM Rocket Pods Icon.png",
+      "file": "hd-icons/eagle_110mm_icon.png",
+      "bytes": 11309
+    },
+    {
+      "wiki": "Eagle 500kg Bomb Icon.png",
+      "file": "hd-icons/eagle_500kg_bomb_icon.png",
+      "bytes": 6990
+    },
+    {
+      "wiki": "Eagle Airstrike Icon.png",
+      "file": "hd-icons/eagle_airstrike_icon.png",
+      "bytes": 8648
+    },
+    {
+      "wiki": "Eagle Cluster Bomb Icon.png",
+      "file": "hd-icons/eagle_cluster_bomb_icon.png",
+      "bytes": 12483
+    },
+    {
+      "wiki": "Eagle Napalm Airstrike Icon.png",
+      "file": "hd-icons/eagle_napalm_airstrike_icon.png",
+      "bytes": 10329
+    },
+    {
+      "wiki": "Eagle Rearm Icon.png",
+      "file": "hd-icons/eagle_rearm_icon.png",
+      "bytes": 22042
+    },
+    {
+      "wiki": "Eagle Smoke Strike Icon.png",
+      "file": "hd-icons/eagle_smoke_strike_icon.png",
+      "bytes": 9863
+    },
+    {
+      "wiki": "Eagle Strafing Run Icon.png",
+      "file": "hd-icons/eagle_strafing_run_icon.png",
+      "bytes": 10110
+    },
+    {
+      "wiki": "Emancipator Exosuit Icon.png",
+      "file": "hd-icons/emancipator_exosuit_icon.png",
+      "bytes": 4023
+    },
+    {
+      "wiki": "Expendable Anti-Tank Icon.png",
+      "file": "hd-icons/expendable_anti-tank_icon.png",
+      "bytes": 4251
+    },
+    {
+      "wiki": "Fast Recon Vehicle Icon.png",
+      "file": "hd-icons/fast_recon_vehicle_icon.png",
+      "bytes": 2750
+    },
+    {
+      "wiki": "Flame Sentry Icon.png",
+      "file": "hd-icons/flame_sentry_icon.png",
+      "bytes": 4258
+    },
+    {
+      "wiki": "Flamethrower Icon.png",
+      "file": "hd-icons/flamethrower_icon.png",
+      "bytes": 5072
+    },
+    {
+      "wiki": "Gas Mines Icon.png",
+      "file": "hd-icons/gas_mines_icon.png",
+      "bytes": 4311
+    },
+    {
+      "wiki": "Gatling Sentry Icon.png",
+      "file": "hd-icons/gatling_sentry_icon.png",
+      "bytes": 4991
+    },
+    {
+      "wiki": "Grenade Launcher Icon.png",
+      "file": "hd-icons/grenade_launcher_icon.png",
+      "bytes": 4162
+    },
+    {
+      "wiki": "Grenadier Battlement Icon.png",
+      "file": "hd-icons/grenadier_battlement_icon.png",
+      "bytes": 2858
+    },
+    {
+      "wiki": "HMG Emplacement Icon.png",
+      "file": "hd-icons/hmg_emplacement_icon.png",
+      "bytes": 5460
+    },
+    {
+      "wiki": "Heavy Machine Gun Icon.png",
+      "file": "hd-icons/heavy_machine_gun_icon.png",
+      "bytes": 5172
+    },
+    {
+      "wiki": "Hellbomb Icon.png",
+      "file": "hd-icons/hellbomb_icon.png",
+      "bytes": 4712
+    },
+    {
+      "wiki": "Hive Breaker Drill Icon.png",
+      "file": "hd-icons/hive_breaker_drill_icon.png",
+      "bytes": 4260
+    },
+    {
+      "wiki": "Hover Pack Icon.png",
+      "file": "hd-icons/hover_pack_icon.png",
+      "bytes": 2464
+    },
+    {
+      "wiki": "Incendiary Mines Icon.png",
+      "file": "hd-icons/incendiary_mines_icon.png",
+      "bytes": 5791
+    },
+    {
+      "wiki": "Jump Pack Icon.png",
+      "file": "hd-icons/jump_pack_icon.png",
+      "bytes": 3139
+    },
+    {
+      "wiki": "Laser Cannon Icon.png",
+      "file": "hd-icons/laser_cannon_icon.png",
+      "bytes": 5226
+    },
+    {
+      "wiki": "Left Arrow.png",
+      "file": "hd-icons/left_arrow.png",
+      "bytes": 34768
+    },
+    {
+      "wiki": "Machine Gun Icon.png",
+      "file": "hd-icons/machine_gun_icon.png",
+      "bytes": 5556
+    },
+    {
+      "wiki": "Machine Gun Sentry Icon.png",
+      "file": "hd-icons/machine_gun_sentry_icon.png",
+      "bytes": 4188
+    },
+    {
+      "wiki": "Mortar Sentry Icon.png",
+      "file": "hd-icons/mortar_sentry_icon.png",
+      "bytes": 5172
+    },
+    {
+      "wiki": "One True Flag Icon.png",
+      "file": "hd-icons/one_true_flag_icon.png",
+      "bytes": 3726
+    },
+    {
+      "wiki": "Orbital 120MM HE Barrage Icon.png",
+      "file": "hd-icons/orbital_120mm_icon.png",
+      "bytes": 8879
+    },
+    {
+      "wiki": "Orbital 380MM HE Barrage Icon.png",
+      "file": "hd-icons/orbital_380mm_icon.png",
+      "bytes": 8472
+    },
+    {
+      "wiki": "Orbital Airburst Strike Icon.png",
+      "file": "hd-icons/orbital_airburst_icon.png",
+      "bytes": 10676
+    },
+    {
+      "wiki": "Orbital EMS Strike Icon.png",
+      "file": "hd-icons/orbital_ems_strike_icon.png",
+      "bytes": 9755
+    },
+    {
+      "wiki": "Orbital Gas Strike Icon.png",
+      "file": "hd-icons/orbital_gas_strike_icon.png",
+      "bytes": 9816
+    },
+    {
+      "wiki": "Orbital Gatling Barrage Icon.png",
+      "file": "hd-icons/orbital_gatling_icon.png",
+      "bytes": 7598
+    },
+    {
+      "wiki": "Orbital Laser Icon.png",
+      "file": "hd-icons/orbital_laser_icon.png",
+      "bytes": 8219
+    },
+    {
+      "wiki": "Orbital Napalm Barrage Icon.png",
+      "file": "hd-icons/orbital_napalm_barrage_icon.png",
+      "bytes": 4499
+    },
+    {
+      "wiki": "Orbital Precision Strike Icon.png",
+      "file": "hd-icons/orbital_precision_icon.png",
+      "bytes": 8972
+    },
+    {
+      "wiki": "Orbital Railcannon Strike Icon.png",
+      "file": "hd-icons/orbital_railcannon_icon.png",
+      "bytes": 10425
+    },
+    {
+      "wiki": "Orbital Smoke Strike Icon.png",
+      "file": "hd-icons/orbital_smoke_strike_icon.png",
+      "bytes": 10237
+    },
+    {
+      "wiki": "Orbital Walking Barrage Icon.png",
+      "file": "hd-icons/orbital_walking_icon.png",
+      "bytes": 8510
+    },
+    {
+      "wiki": "Patriot Exosuit Icon.png",
+      "file": "hd-icons/patriot_exosuit_icon.png",
+      "bytes": 3642
+    },
+    {
+      "wiki": "Portable Hellbomb Icon.png",
+      "file": "hd-icons/portable_hellbomb_icon.png",
+      "bytes": 4616
+    },
+    {
+      "wiki": "Quasar Cannon Icon.png",
+      "file": "hd-icons/quasar_cannon_icon.png",
+      "bytes": 4444
+    },
+    {
+      "wiki": "Railgun Icon.png",
+      "file": "hd-icons/railgun_icon.png",
+      "bytes": 4424
+    },
+    {
+      "wiki": "Recoilless Rifle Icon.png",
+      "file": "hd-icons/recoilless_rifle_icon.png",
+      "bytes": 5115
+    },
+    {
+      "wiki": "Reinforce Icon.png",
+      "file": "hd-icons/reinforce_icon.png",
+      "bytes": 4119
+    },
+    {
+      "wiki": "Resupply Icon.png",
+      "file": "hd-icons/resupply_icon.png",
+      "bytes": 3624
+    },
+    {
+      "wiki": "Right Arrow.png",
+      "file": "hd-icons/right_arrow.png",
+      "bytes": 33758
+    },
+    {
+      "wiki": "Rocket Sentry Icon.png",
+      "file": "hd-icons/rocket_sentry_icon.png",
+      "bytes": 5316
+    },
+    {
+      "wiki": "SEAF Artillery Icon.png",
+      "file": "hd-icons/seaf_artillery_icon.png",
+      "bytes": 4464
+    },
+    {
+      "wiki": "SOS Beacon Icon.png",
+      "file": "hd-icons/sos_beacon_icon.png",
+      "bytes": 4846
+    },
+    {
+      "wiki": "SSSD Delivery Icon.png",
+      "file": "hd-icons/sssd_delivery_icon.png",
+      "bytes": 3466
+    },
+    {
+      "wiki": "Seismic Probe Icon.png",
+      "file": "hd-icons/seismic_probe_icon.png",
+      "bytes": 4273
+    },
+    {
+      "wiki": "Shield Generator Pack Icon.png",
+      "file": "hd-icons/shield_generator_pack_icon.png",
+      "bytes": 4751
+    },
+    {
+      "wiki": "Shield Generator Relay Icon.png",
+      "file": "hd-icons/shield_generator_relay_icon.png",
+      "bytes": 5304
+    },
+    {
+      "wiki": "Spear Icon.png",
+      "file": "hd-icons/spear_icon.png",
+      "bytes": 4462
+    },
+    {
+      "wiki": "StA-X3 W.A.S.P. Launcher Icon.png",
+      "file": "hd-icons/wasp_launcher_icon.png",
+      "bytes": 3840
+    },
+    {
+      "wiki": "Stalwart Icon.png",
+      "file": "hd-icons/stalwart_icon.png",
+      "bytes": 4269
+    },
+    {
+      "wiki": "Sterilizer Icon.png",
+      "file": "hd-icons/sterilizer_icon.png",
+      "bytes": 4944
+    },
+    {
+      "wiki": "Super Earth Flag Icon.png",
+      "file": "hd-icons/super_earth_flag_icon.png",
+      "bytes": 4296
+    },
+    {
+      "wiki": "Supply Pack Icon.png",
+      "file": "hd-icons/supply_pack_icon.png",
+      "bytes": 2940
+    },
+    {
+      "wiki": "Tesla Tower Icon.png",
+      "file": "hd-icons/tesla_tower_icon.png",
+      "bytes": 4560
+    },
+    {
+      "wiki": "Up Arrow.png",
+      "file": "hd-icons/up_arrow.png",
+      "bytes": 34427
+    },
+    {
+      "wiki": "Upload Data Icon.png",
+      "file": "hd-icons/upload_data_icon.png",
+      "bytes": 3466
+    }
+  ]
+}
