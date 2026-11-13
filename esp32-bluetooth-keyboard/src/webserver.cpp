@@ -540,11 +540,14 @@ static void startSoftApFallback() {
     Serial.println(apIp);
 }
 
-void startWifiAndServer() {
+void startWifiAndServer(bool forceSoftAp) {
     deviceConfigBegin();
     wifiConfigBegin();
 
-    if (!connectWifiSta()) {
+    if (forceSoftAp) {
+        Serial.println("WiFi: SoftAP forced (double reset)");
+        startSoftApFallback();
+    } else if (!connectWifiSta()) {
         startSoftApFallback();
     }
 
