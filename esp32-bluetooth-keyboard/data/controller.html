@@ -138,6 +138,10 @@
         color: #6aa0d8;
       }
 
+      .nav a + a {
+        margin-left: 14px;
+      }
+
       .feedback {
         min-height: 1.2em;
         margin-top: 14px;
@@ -238,7 +242,10 @@
         </div>
       </div>
 
-      <p class="nav"><a id="configLink" href="#">Config</a></p>
+      <p class="nav">
+        <a id="helldiverLink" href="#">Helldiver</a>
+        <a id="configLink" href="#">Config</a>
+      </p>
       <p id="feedback" class="feedback"></p>
     </div>
 
@@ -429,11 +436,13 @@
       const padEl = document.getElementById("pad");
       const comboBody = document.getElementById("comboBody");
       const configLink = document.getElementById("configLink");
+      const helldiverLink = document.getElementById("helldiverLink");
       const typeTextEl = document.getElementById("typeText");
       const typeCountEl = document.getElementById("typeCount");
       const typeSendEl = document.getElementById("typeSend");
 
       configLink.href = API_BASE + "/config";
+      helldiverLink.href = API_BASE + "/helldiver";
 
       function setFeedback(text, isError) {
         feedbackEl.textContent = text || "";

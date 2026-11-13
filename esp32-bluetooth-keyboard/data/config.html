@@ -14,7 +14,10 @@
 
       <p id="status" class="status unpaired">BLE: checking...</p>
 
-      <p class="nav"><a id="controllerLink" href="#">Controller</a></p>
+      <p class="nav">
+        <a id="controllerLink" href="#">Controller</a>
+        <a id="helldiverLink" href="#">Helldiver</a>
+      </p>
 
       <h2 class="section-title">Device</h2>
 
@@ -128,6 +131,7 @@
 
       // Keep relative style.css so local edits apply when opening this file from disk.
       document.getElementById("controllerLink").href = API_BASE + "/";
+      document.getElementById("helldiverLink").href = API_BASE + "/helldiver";
 
       const statusEl = document.getElementById("status");
       const feedbackEl = document.getElementById("feedback");
