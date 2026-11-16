@@ -7,120 +7,144 @@
     <link id="stylesheet" rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="main-block">
-      <div class="title">
-        <h1>Config</h1>
-      </div>
-
-      <p id="status" class="status unpaired">BLE: checking...</p>
-
-      <p class="nav">
+    <header class="site-header">
+      <h1 class="site-title">Config</h1>
+      <nav class="site-nav">
         <a id="controllerLink" href="#">Controller</a>
         <a id="helldiverLink" href="#">Helldiver</a>
-      </p>
+        <a href="/config" class="current">Config</a>
+      </nav>
+      <span class="ble-status-wrap" title="BLE: checking...">
+        <span class="ble-status-label">BLE:</span>
+        <span id="status" class="ble-status unpaired">✕</span>
+      </span>
+    </header>
 
-      <h2 class="section-title">Device</h2>
-
-      <form id="deviceForm" class="wifi-form">
-        <label class="wifi-field">
-          SoftAP name
-          <input id="softApSsid" type="text" maxlength="32" autocomplete="off" required />
-        </label>
-        <label class="wifi-field">
-          Bluetooth name
-          <input id="bleName" type="text" maxlength="29" autocomplete="off" required />
-        </label>
-        <button type="submit" id="deviceSave" class="combo-submit">Save Device</button>
-      </form>
-
-      <h2 class="section-title">WiFi</h2>
-
-      <form id="wifiForm" class="wifi-form">
-        <label class="wifi-field">
-          SSID
-          <input id="wifiSsid" type="text" maxlength="32" autocomplete="off" required />
-        </label>
-        <label class="wifi-field">
-          Password
-          <input
-            id="wifiPassword"
-            type="password"
-            maxlength="64"
-            autocomplete="new-password"
-            placeholder="enter to set/change"
-          />
-        </label>
-        <button type="submit" id="wifiSave" class="combo-submit">Save WiFi</button>
-      </form>
-
-      <div class="table-wrap">
-        <table class="config-table">
-          <colgroup>
-            <col style="width: 50px" />
-            <col style="width: 50px" />
-            <col style="width: 50px" />
-            <col style="width: 50px" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th>Slot</th>
-              <th>Name</th>
-              <th>Mapping</th>
-              <th>Reset</th>
-            </tr>
-          </thead>
-          <tbody id="slotsBody"></tbody>
-        </table>
-      </div>
-
-      <h2 class="section-title">Combos</h2>
-
-      <form id="comboForm" class="combo-form">
-        <div class="combo-name-row">
-          <label class="combo-name-label">
-            Name
-            <input id="comboName" type="text" maxlength="20" autocomplete="off" />
-          </label>
-          <label class="combo-at-once">
-            <input id="comboAtOnce" type="checkbox" />
-            at once
-          </label>
-          <label class="combo-name-label">
-            hold Time
-            <input id="comboHoldTime" class="combo-time" type="number" min="0" max="65535" step="1" value="0" />
-          </label>
-          <label class="combo-name-label">
-            wait after tap
-            <input id="comboWait" class="combo-time" type="number" min="0" max="65535" step="1" value="0" />
-          </label>
+    <div class="main-block">
+      <section class="panel">
+        <div class="panel-header">
+          <h1>Settings</h1>
+          <button type="button" id="settingsToggle" class="collapse-btn" aria-expanded="true" aria-controls="settingsBody">
+            Collapse
+          </button>
         </div>
+        <div id="settingsBody" class="panel-body">
+          <h3 class="section-title">Device</h3>
 
-        <div class="combo-toolbar">
-          <button type="button" id="addKey" class="combo-btn" disabled>Add key</button>
+          <form id="deviceForm" class="wifi-form">
+            <label class="wifi-field">
+              Current IP
+              <input id="currentIp" type="text" readonly tabindex="-1" />
+            </label>
+            <label class="wifi-field">
+              SoftAP name
+              <input id="softApSsid" type="text" maxlength="32" autocomplete="off" required />
+            </label>
+            <label class="wifi-field">
+              Bluetooth name
+              <input id="bleName" type="text" maxlength="29" autocomplete="off" required />
+            </label>
+            <button type="submit" id="deviceSave" class="combo-submit">Save Device</button>
+          </form>
+
+          <h3 class="section-title">WiFi</h3>
+
+          <form id="wifiForm" class="wifi-form">
+            <label class="wifi-field">
+              SSID
+              <input id="wifiSsid" type="text" maxlength="32" autocomplete="off" required />
+            </label>
+            <label class="wifi-field">
+              Password
+              <input
+                id="wifiPassword"
+                type="password"
+                maxlength="64"
+                autocomplete="new-password"
+                placeholder="enter to set/change"
+              />
+            </label>
+            <button type="submit" id="wifiSave" class="combo-submit">Save WiFi</button>
+          </form>
         </div>
+      </section>
 
-        <div class="table-wrap">
-          <table class="combo-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Order</th>
-                <th>Key</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="comboBody">
-              <tr class="combo-empty-row">
-                <td colspan="4" class="combo-empty">Add a key to start the combo.</td>
-              </tr>
-            </tbody>
-          </table>
+      <section class="panel">
+        <div class="panel-header">
+          <h1>Combos</h1>
+          <button type="button" id="combosToggle" class="collapse-btn" aria-expanded="true" aria-controls="combosBody">
+            Collapse
+          </button>
         </div>
+        <div id="combosBody" class="panel-body">
+          <div class="table-wrap">
+            <table class="config-table">
+              <colgroup>
+                <col style="width: 50px" />
+                <col style="width: 50px" />
+                <col style="width: 50px" />
+                <col style="width: 50px" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Slot</th>
+                  <th>Name</th>
+                  <th>Mapping</th>
+                  <th>Reset</th>
+                </tr>
+              </thead>
+              <tbody id="slotsBody"></tbody>
+            </table>
+          </div>
 
-        <button type="submit" class="combo-submit">Create</button>
-      </form>
+          <form id="comboForm" class="combo-form">
+            <div class="combo-name-row">
+              <label class="combo-name-label">
+                Name
+                <input id="comboName" type="text" maxlength="20" autocomplete="off" />
+              </label>
+              <label class="combo-at-once">
+                <input id="comboAtOnce" type="checkbox" />
+                at once
+              </label>
+              <label class="combo-name-label">
+                hold Time
+                <input id="comboHoldTime" class="combo-time" type="number" min="0" max="65535" step="1" value="0" />
+              </label>
+              <label class="combo-name-label">
+                wait after tap
+                <input id="comboWait" class="combo-time" type="number" min="0" max="65535" step="1" value="0" />
+              </label>
+            </div>
 
-      <ul id="comboList" class="combo-list"></ul>
+            <div class="combo-toolbar">
+              <button type="button" id="addKey" class="combo-btn" disabled>Add key</button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="combo-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Order</th>
+                    <th>Key</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="comboBody">
+                  <tr class="combo-empty-row">
+                    <td colspan="4" class="combo-empty">Add a key to start the combo.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button type="submit" class="combo-submit">Create</button>
+          </form>
+
+          <ul id="comboList" class="combo-list"></ul>
+        </div>
+      </section>
 
       <p id="feedback" class="feedback"></p>
     </div>
@@ -137,6 +161,7 @@
       const feedbackEl = document.getElementById("feedback");
       const slotsBody = document.getElementById("slotsBody");
       const deviceForm = document.getElementById("deviceForm");
+      const currentIp = document.getElementById("currentIp");
       const softApSsid = document.getElementById("softApSsid");
       const bleName = document.getElementById("bleName");
       const deviceSave = document.getElementById("deviceSave");
@@ -163,16 +188,19 @@
           })
           .then(function (data) {
             if (data.paired) {
-              statusEl.textContent = "BLE: paired";
-              statusEl.className = "status paired";
+              statusEl.textContent = "✓";
+              statusEl.className = "ble-status paired";
+              statusEl.parentElement.title = "BLE: paired";
             } else {
-              statusEl.textContent = "BLE: not paired";
-              statusEl.className = "status unpaired";
+              statusEl.textContent = "✕";
+              statusEl.className = "ble-status unpaired";
+              statusEl.parentElement.title = "BLE: not paired";
             }
           })
           .catch(function () {
-            statusEl.textContent = "BLE: status unavailable";
-            statusEl.className = "status unpaired";
+            statusEl.textContent = "✕";
+            statusEl.className = "ble-status unpaired";
+            statusEl.parentElement.title = "BLE: status unavailable";
           });
       }
 
@@ -846,6 +874,7 @@
             }
             wifiSsid.value = (results[3] && results[3].ssid) || "";
             wifiPassword.value = "";
+            currentIp.value = (results[4] && results[4].current_ip) || "";
             softApSsid.value = (results[4] && results[4].softApSsid) || "";
             bleName.value = (results[4] && results[4].bleName) || "";
             if (!catalog.length) {
@@ -862,6 +891,26 @@
             console.error(err);
           });
       }
+
+      function bindCollapse(toggleId, bodyId) {
+        var toggle = document.getElementById(toggleId);
+        var body = document.getElementById(bodyId);
+        toggle.addEventListener("click", function () {
+          var open = body.hasAttribute("hidden");
+          if (open) {
+            body.removeAttribute("hidden");
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.textContent = "Collapse";
+          } else {
+            body.setAttribute("hidden", "");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.textContent = "Expand";
+          }
+        });
+      }
+
+      bindCollapse("settingsToggle", "settingsBody");
+      bindCollapse("combosToggle", "combosBody");
 
       refreshStatus();
       setInterval(refreshStatus, 2000);

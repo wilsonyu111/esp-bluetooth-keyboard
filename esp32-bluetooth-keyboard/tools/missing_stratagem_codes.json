@@ -1,0 +1,616 @@
+[
+  {
+    "name": "Orbital Confetti",
+    "wiki_name": "Orbital Confetti",
+    "dirs": [
+      "R",
+      "D",
+      "D",
+      "U",
+      "U",
+      "D",
+      "D",
+      "U",
+      "U"
+    ],
+    "code": "RDDUUDDUU",
+    "category": "Offensive",
+    "icon": "orb_confetti_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Eagle Fly By",
+    "wiki_name": "Eagle Fly By",
+    "dirs": [
+      "U",
+      "D",
+      "D",
+      "U",
+      "U",
+      "D",
+      "D",
+      "U",
+      "U"
+    ],
+    "code": "UDDUUDDUU",
+    "category": "Offensive",
+    "icon": "eagle_flyby_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Eagle Gas Airstrike",
+    "wiki_name": "Eagle Gas Airstrike",
+    "dirs": [
+      "U",
+      "R",
+      "L",
+      "R"
+    ],
+    "code": "URLR",
+    "category": "Offensive",
+    "icon": "eagle_gas_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "AMW-20 Apex",
+    "wiki_name": "AMW-20 Apex",
+    "dirs": [
+      "D",
+      "L",
+      "L",
+      "U",
+      "D",
+      "L"
+    ],
+    "code": "DLLUDL",
+    "category": "Supply",
+    "icon": "apex_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "CQC-20 Breaching Hammer",
+    "wiki_name": "CQC-20 Breaching Hammer",
+    "dirs": [
+      "D",
+      "L",
+      "R",
+      "L",
+      "U"
+    ],
+    "code": "DLRLU",
+    "category": "Supply",
+    "icon": "breach_hammer_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "MGX-42 Bullet Storm",
+    "wiki_name": "MGX-42 Bullet Storm",
+    "dirs": [
+      "D",
+      "L",
+      "D",
+      "R",
+      "U",
+      "L"
+    ],
+    "code": "DLDRUL",
+    "category": "Supply",
+    "icon": "bullet_storm_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "PLAS-45 Epoch",
+    "wiki_name": "PLAS-45 Epoch",
+    "dirs": [
+      "D",
+      "L",
+      "U",
+      "L",
+      "R"
+    ],
+    "code": "DLULR",
+    "category": "Supply",
+    "icon": "epoch_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "S-11 Speargun",
+    "wiki_name": "S-11 Speargun",
+    "dirs": [
+      "D",
+      "R",
+      "D",
+      "L",
+      "U",
+      "R"
+    ],
+    "code": "DRDLUR",
+    "category": "Supply",
+    "icon": "speargun_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "EAT-411 Leveller",
+    "wiki_name": "EAT-411 Leveller",
+    "dirs": [
+      "D",
+      "D",
+      "L",
+      "U",
+      "D"
+    ],
+    "code": "DDLUD",
+    "category": "Supply",
+    "icon": "leveller_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "EAT-700 Expendable Napalm",
+    "wiki_name": "EAT-700 Expendable Napalm",
+    "dirs": [
+      "D",
+      "D",
+      "L",
+      "U",
+      "L"
+    ],
+    "code": "DDLUL",
+    "category": "Supply",
+    "icon": "exp_napalm_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "CQC-9 Defoliation Tool",
+    "wiki_name": "CQC-9 Defoliation Tool",
+    "dirs": [
+      "D",
+      "L",
+      "R",
+      "R",
+      "D"
+    ],
+    "code": "DLRRD",
+    "category": "Supply",
+    "icon": "defoliation_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "B/MD C4 Pack",
+    "wiki_name": "B/MD C4 Pack",
+    "dirs": [
+      "D",
+      "R",
+      "U",
+      "U",
+      "R",
+      "U"
+    ],
+    "code": "DRUURU",
+    "category": "Supply",
+    "icon": "c4_pack_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "MS-11 Solo Silo",
+    "wiki_name": "MS-11 Solo Silo",
+    "dirs": [
+      "D",
+      "U",
+      "R",
+      "D",
+      "D"
+    ],
+    "code": "DURDD",
+    "category": "Supply",
+    "icon": "solo_silo_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "B/FLAM-80 Cremator",
+    "wiki_name": "B/FLAM-80 Cremator",
+    "dirs": [
+      "D",
+      "D",
+      "R",
+      "D",
+      "U",
+      "U"
+    ],
+    "code": "DDRDUU",
+    "category": "Supply",
+    "icon": "cremator_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "GL-28 Belt-Fed Grenade Launcher",
+    "wiki_name": "GL-28 Belt-Fed Grenade Launcher",
+    "dirs": [
+      "D",
+      "L",
+      "U",
+      "L",
+      "U",
+      "U"
+    ],
+    "code": "DLULUU",
+    "category": "Supply",
+    "icon": "belt_gl_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "M-1000 Maxigun",
+    "wiki_name": "M-1000 Maxigun",
+    "dirs": [
+      "D",
+      "L",
+      "R",
+      "D",
+      "U",
+      "U"
+    ],
+    "code": "DLRDUU",
+    "category": "Supply",
+    "icon": "maxigun_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "LAS-44 Nova",
+    "wiki_name": "LAS-44 Nova",
+    "dirs": [
+      "D",
+      "L",
+      "R",
+      "D",
+      "D"
+    ],
+    "code": "DLRDD",
+    "category": "Supply",
+    "icon": "nova_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "40-K Meltagun",
+    "wiki_name": "40-K Meltagun",
+    "dirs": [
+      "D",
+      "L",
+      "U",
+      "L",
+      "L",
+      "D"
+    ],
+    "code": "DLULLD",
+    "category": "Supply",
+    "icon": "meltagun_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "AX/FLAM-75 Hot Dog",
+    "wiki_name": "AX/FLAM-75 Hot Dog",
+    "dirs": [
+      "D",
+      "U",
+      "L",
+      "U",
+      "L",
+      "L"
+    ],
+    "code": "DULULL",
+    "category": "Supply",
+    "icon": "hot_dog_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "LIFT-182 Warp Pack",
+    "wiki_name": "LIFT-182 Warp Pack",
+    "dirs": [
+      "D",
+      "L",
+      "R",
+      "D",
+      "L",
+      "R"
+    ],
+    "code": "DLRDLR",
+    "category": "Supply",
+    "icon": "warp_pack_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "M-104 Incinerator FRV",
+    "wiki_name": "M-104 Incinerator FRV",
+    "dirs": [
+      "L",
+      "D",
+      "R",
+      "L",
+      "D",
+      "U",
+      "U"
+    ],
+    "code": "LDRLDUU",
+    "category": "Supply",
+    "icon": "incin_frv_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "TD-110 Maelstrom",
+    "wiki_name": "TD-110 Maelstrom",
+    "dirs": [
+      "L",
+      "D",
+      "R",
+      "D",
+      "L",
+      "D",
+      "U",
+      "L",
+      "R"
+    ],
+    "code": "LDRDLDULR",
+    "category": "Supply",
+    "icon": "maelstrom_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "M-103 Supply FRV",
+    "wiki_name": "M-103 Supply FRV",
+    "dirs": [
+      "L",
+      "D",
+      "L",
+      "L",
+      "D",
+      "U",
+      "R"
+    ],
+    "code": "LDLLDUR",
+    "category": "Supply",
+    "icon": "supply_frv_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "EXO-55 Breakthrough Exosuit",
+    "wiki_name": "EXO-55 Breakthrough Exosuit",
+    "dirs": [
+      "L",
+      "D",
+      "R",
+      "L",
+      "R",
+      "D",
+      "U"
+    ],
+    "code": "LDRLRDU",
+    "category": "Supply",
+    "icon": "breakthrough_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "EXO-51 Lumberer Exosuit",
+    "wiki_name": "EXO-51 Lumberer Exosuit",
+    "dirs": [
+      "L",
+      "D",
+      "R",
+      "U",
+      "R",
+      "L",
+      "U"
+    ],
+    "code": "LDRURLU",
+    "category": "Supply",
+    "icon": "lumberer_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "A/LAS-98 Laser Sentry",
+    "wiki_name": "A/LAS-98 Laser Sentry",
+    "dirs": [
+      "D",
+      "U",
+      "R",
+      "D",
+      "U",
+      "R"
+    ],
+    "code": "DURDUR",
+    "category": "Defensive",
+    "icon": "laser_sentry_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "A/GM-17 Gas Mortar Sentry",
+    "wiki_name": "A/GM-17 Gas Mortar Sentry",
+    "dirs": [
+      "D",
+      "U",
+      "R",
+      "D",
+      "L"
+    ],
+    "code": "DURDL",
+    "category": "Defensive",
+    "icon": "gas_mortar_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Call In Super Destroyer",
+    "wiki_name": "Call In Super Destroyer",
+    "dirs": [
+      "U",
+      "U",
+      "D",
+      "D",
+      "L",
+      "R",
+      "L",
+      "R"
+    ],
+    "code": "UUDDLRLR",
+    "category": "Mission",
+    "icon": "super_destroyer_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Tectonic Drill",
+    "wiki_name": "Tectonic Drill",
+    "dirs": [
+      "U",
+      "D",
+      "U",
+      "D",
+      "U",
+      "D"
+    ],
+    "code": "UDUDUD",
+    "category": "Mission",
+    "icon": "tectonic_drill_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Tactical Video Camera",
+    "wiki_name": "Tactical Video Camera",
+    "dirs": [
+      "R",
+      "D",
+      "D",
+      "U",
+      "L",
+      "L",
+      "U"
+    ],
+    "code": "RDDULLU",
+    "category": "Mission",
+    "icon": "tactical_cam_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Cargo Container",
+    "wiki_name": "Cargo Container",
+    "dirs": [
+      "U",
+      "U",
+      "D",
+      "D",
+      "R",
+      "D"
+    ],
+    "code": "UUDDRD",
+    "category": "Mission",
+    "icon": "cargo_container_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Reinforcement Pods",
+    "wiki_name": "Reinforcement Pods",
+    "dirs": [
+      "L",
+      "R",
+      "U",
+      "U",
+      "U"
+    ],
+    "code": "LRUUU",
+    "category": "Mission",
+    "icon": "reinforce_pods_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Prospecting Drill",
+    "wiki_name": "Prospecting Drill",
+    "dirs": [
+      "D",
+      "D",
+      "L",
+      "R",
+      "D",
+      "D"
+    ],
+    "code": "DDLRDD",
+    "category": "Mission",
+    "icon": "prospect_drill_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Portable Comms Relay",
+    "wiki_name": "Portable Comms Relay",
+    "dirs": [
+      "U",
+      "U",
+      "D",
+      "D",
+      "L",
+      "L",
+      "D"
+    ],
+    "code": "UUDDLLD",
+    "category": "Mission",
+    "icon": "comms_relay_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Dark Fluid Vessel",
+    "wiki_name": "Dark Fluid Vessel",
+    "dirs": [
+      "U",
+      "L",
+      "R",
+      "D",
+      "U",
+      "U"
+    ],
+    "code": "ULRDUU",
+    "category": "Mission",
+    "icon": "dark_fluid_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Aquifer Drill",
+    "wiki_name": "Aquifer Drill",
+    "dirs": [
+      "L",
+      "L",
+      "L",
+      "U",
+      "D",
+      "R",
+      "D",
+      "D"
+    ],
+    "code": "LLLUDRDD",
+    "category": "Mission",
+    "icon": "aquifer_drill_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Activate E-711 Extraction Drill",
+    "wiki_name": "Activate E-711 Extraction Drill",
+    "dirs": [
+      "D",
+      "D",
+      "L",
+      "L",
+      "D",
+      "D"
+    ],
+    "code": "DDLLDD",
+    "category": "Mission",
+    "icon": "e711_drill_icon.png",
+    "status": "ok"
+  },
+  {
+    "name": "Orbital Illumination Flare",
+    "wiki_name": "Orbital Illumination Flare",
+    "dirs": [
+      "R",
+      "R",
+      "L",
+      "L"
+    ],
+    "code": "RRLL",
+    "category": "Mission",
+    "icon": "orb_illum_flare_icon.png",
+    "status": "ok"
+  }
+]

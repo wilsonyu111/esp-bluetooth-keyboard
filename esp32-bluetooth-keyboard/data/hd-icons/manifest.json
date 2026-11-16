@@ -425,6 +425,234 @@
       "wiki": "Upload Data Icon.png",
       "file": "hd-icons/upload_data_icon.png",
       "bytes": 3466
+    },
+    {
+      "wiki": "Eagle Gas Airstrike",
+      "file": "hd-icons/eagle_gas_icon.png",
+      "bytes": 9173,
+      "url": "https://helldivers.wiki.gg/images/Eagle_Gas_Airstrike_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "AMW-20 Apex",
+      "file": "hd-icons/apex_icon.png",
+      "bytes": 4439,
+      "url": "https://helldivers.wiki.gg/images/Apex_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "CQC-20 Breaching Hammer",
+      "file": "hd-icons/breach_hammer_icon.png",
+      "bytes": 4434,
+      "url": "https://helldivers.wiki.gg/images/Breaching_Hammer_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "MGX-42 Bullet Storm",
+      "file": "hd-icons/bullet_storm_icon.png",
+      "bytes": 2853,
+      "url": "https://helldivers.wiki.gg/images/Bullet_Storm_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "PLAS-45 Epoch",
+      "file": "hd-icons/epoch_icon.png",
+      "bytes": 7732,
+      "url": "https://helldivers.wiki.gg/images/Epoch_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "S-11 Speargun",
+      "file": "hd-icons/speargun_icon.png",
+      "bytes": 5630,
+      "url": "https://helldivers.wiki.gg/images/Speargun_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "EAT-411 Leveller",
+      "file": "hd-icons/leveller_icon.png",
+      "bytes": 3842,
+      "url": "https://helldivers.wiki.gg/images/Leveller_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "EAT-700 Expendable Napalm",
+      "file": "hd-icons/exp_napalm_icon.png",
+      "bytes": 4475,
+      "url": "https://helldivers.wiki.gg/images/Expendable_Napalm_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "CQC-9 Defoliation Tool",
+      "file": "hd-icons/defoliation_icon.png",
+      "bytes": 5194,
+      "url": "https://helldivers.wiki.gg/images/Defoliation_Tool_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "B/MD C4 Pack",
+      "file": "hd-icons/c4_pack_icon.png",
+      "bytes": 3242,
+      "url": "https://helldivers.wiki.gg/images/C4_Pack_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "MS-11 Solo Silo",
+      "file": "hd-icons/solo_silo_icon.png",
+      "bytes": 2857,
+      "url": "https://helldivers.wiki.gg/images/Solo_Silo_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "B/FLAM-80 Cremator",
+      "file": "hd-icons/cremator_icon.png",
+      "bytes": 3981,
+      "url": "https://helldivers.wiki.gg/images/Cremator_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "GL-28 Belt-Fed Grenade Launcher",
+      "file": "hd-icons/belt_gl_icon.png",
+      "bytes": 2664,
+      "url": "https://helldivers.wiki.gg/images/Belt-Fed_Grenade_Launcher_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "M-1000 Maxigun",
+      "file": "hd-icons/maxigun_icon.png",
+      "bytes": 2761,
+      "url": "https://helldivers.wiki.gg/images/Maxigun_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "LAS-44 Nova",
+      "file": "hd-icons/nova_icon.png",
+      "bytes": 3664,
+      "url": "https://helldivers.wiki.gg/images/Nova_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "40-K Meltagun",
+      "file": "hd-icons/meltagun_icon.png",
+      "bytes": 7802,
+      "url": "https://helldivers.wiki.gg/images/Meltagun_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "AX/FLAM-75 Hot Dog",
+      "file": "hd-icons/hot_dog_icon.png",
+      "bytes": 3669,
+      "url": "https://helldivers.wiki.gg/images/Hot_Dog_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "LIFT-182 Warp Pack",
+      "file": "hd-icons/warp_pack_icon.png",
+      "bytes": 11104,
+      "url": "https://helldivers.wiki.gg/images/Warp_Pack_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "M-104 Incinerator FRV",
+      "file": "hd-icons/incin_frv_icon.png",
+      "bytes": 1983,
+      "url": "https://helldivers.wiki.gg/images/Incinerator_FRV_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "TD-110 Maelstrom",
+      "file": "hd-icons/maelstrom_icon.png",
+      "bytes": 3142,
+      "url": "https://helldivers.wiki.gg/images/Maelstrom_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "M-103 Supply FRV",
+      "file": "hd-icons/supply_frv_icon.png",
+      "bytes": 1213,
+      "url": "https://helldivers.wiki.gg/images/Supply_FRV_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "EXO-55 Breakthrough Exosuit",
+      "file": "hd-icons/breakthrough_icon.png",
+      "bytes": 2350,
+      "url": "https://helldivers.wiki.gg/images/Breakthrough_Exosuit_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "EXO-51 Lumberer Exosuit",
+      "file": "hd-icons/lumberer_icon.png",
+      "bytes": 2090,
+      "url": "https://helldivers.wiki.gg/images/Lumberer_Exosuit_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "A/LAS-98 Laser Sentry",
+      "file": "hd-icons/laser_sentry_icon.png",
+      "bytes": 4806,
+      "url": "https://helldivers.wiki.gg/images/Laser_Sentry_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "A/GM-17 Gas Mortar Sentry",
+      "file": "hd-icons/gas_mortar_icon.png",
+      "bytes": 6275,
+      "url": "https://helldivers.wiki.gg/images/Gas_Mortar_Sentry_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Call In Super Destroyer",
+      "file": "hd-icons/super_destroyer_icon.png",
+      "bytes": 5370,
+      "url": "https://helldivers.wiki.gg/images/Call_In_Super_Destroyer_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Tactical Video Camera",
+      "file": "hd-icons/tactical_cam_icon.png",
+      "bytes": 2444,
+      "url": "https://helldivers.wiki.gg/images/Tactical_Video_Camera_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Cargo Container",
+      "file": "hd-icons/cargo_container_icon.png",
+      "bytes": 1273,
+      "url": "https://helldivers.wiki.gg/images/Cargo_Container_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Dark Fluid Vessel",
+      "file": "hd-icons/dark_fluid_icon.png",
+      "bytes": 2375,
+      "url": "https://helldivers.wiki.gg/images/Dark_Fluid_Vessel_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Orbital Illumination Flare",
+      "file": "hd-icons/orb_illum_flare_icon.png",
+      "bytes": 3393,
+      "url": "https://helldivers.wiki.gg/images/Orbital_Illumination_Flare_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Orbital Confetti (fallback)",
+      "file": "hd-icons/orb_confetti_icon.png",
+      "bytes": 5397,
+      "url": "https://helldivers.wiki.gg/images/Orbital_Strike_Stratagem_Fallback_Icon_Background.svg"
+    },
+    {
+      "wiki": "Eagle Fly By (fallback)",
+      "file": "hd-icons/eagle_flyby_icon.png",
+      "bytes": 3885,
+      "url": "https://helldivers.wiki.gg/images/Eagle_Stratagem_Fallback_Icon_Background.svg"
+    },
+    {
+      "wiki": "Tectonic Drill",
+      "file": "hd-icons/tectonic_drill_icon.png",
+      "bytes": 4143,
+      "url": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Reinforcement Pods",
+      "file": "hd-icons/reinforce_pods_icon.png",
+      "bytes": 2511,
+      "url": "https://helldivers.wiki.gg/images/Reinforcement_Pods_TO_Icon.svg"
+    },
+    {
+      "wiki": "Prospecting Drill",
+      "file": "hd-icons/prospect_drill_icon.png",
+      "bytes": 4143,
+      "url": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Portable Comms Relay",
+      "file": "hd-icons/comms_relay_icon.png",
+      "bytes": 1273,
+      "url": "https://helldivers.wiki.gg/images/Cargo_Container_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Aquifer Drill",
+      "file": "hd-icons/aquifer_drill_icon.png",
+      "bytes": 4143,
+      "url": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg"
+    },
+    {
+      "wiki": "Activate E-711 Extraction Drill",
+      "file": "hd-icons/e711_drill_icon.png",
+      "bytes": 4143,
+      "url": "https://helldivers.wiki.gg/images/Drill_Stratagem_Icon_Background.svg"
     }
   ]
 }

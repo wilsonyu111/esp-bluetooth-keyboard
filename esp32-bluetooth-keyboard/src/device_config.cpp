@@ -4,6 +4,7 @@
 static Preferences prefs;
 static char storedSoftApSsid[DEVICE_SOFTAP_SSID_MAX + 1] = "";
 static char storedBleName[DEVICE_BLE_NAME_MAX + 1] = "";
+static char storedCurrentIp[DEVICE_CURRENT_IP_MAX + 1] = "";
 static bool loaded = false;
 
 static void copyBounded(char* dest, size_t destSize, const char* src) {
@@ -49,6 +50,7 @@ void deviceConfigBegin() {
 
     String softAp = prefs.getString("ap", "");
     String ble = prefs.getString("ble", "");
+    String currentIp = prefs.getString("current_ip", "");
     prefs.end();
 
     if (softAp.length() > 0) {
@@ -57,9 +59,13 @@ void deviceConfigBegin() {
     if (ble.length() > 0) {
         copyBounded(storedBleName, sizeof(storedBleName), ble.c_str());
     }
+    if (currentIp.length() > 0) {
+        copyBounded(storedCurrentIp, sizeof(storedCurrentIp), currentIp.c_str());
+    }
 
     loaded = true;
-    Serial.printf("device: SoftAP='%s' BLE='%s'\n", storedSoftApSsid, storedBleName);
+    Serial.printf("device: SoftAP='%s' BLE='%s' current_ip='%s'\n",
+                  storedSoftApSsid, storedBleName, storedCurrentIp);
 }
 
 bool deviceConfigSave(const char* softApSsid, const char* bleName) {
@@ -92,6 +98,28 @@ bool deviceConfigSave(const char* softApSsid, const char* bleName) {
     return true;
 }
 
+bool deviceConfigSaveCurrentIp(const char* ip) {
+    if (ip == nullptr || ip[0] == '\0') {
+        return false;
+    }
+    if (strlen(ip) > DEVICE_CURRENT_IP_MAX) {
+        return false;
+    }
+
+    if (!prefs.begin("device", false)) {
+        Serial.println("device: failed to open Preferences for write");
+        return false;
+    }
+
+    prefs.putString("current_ip", ip);
+    prefs.end();
+
+    copyBounded(storedCurrentIp, sizeof(storedCurrentIp), ip);
+    loaded = true;
+    Serial.printf("device: saved current_ip='%s'\n", storedCurrentIp);
+    return true;
+}
+
 const char* deviceConfigSoftApSsid() {
     if (!loaded) {
         deviceConfigBegin();
@@ -106,17 +134,26 @@ const char* deviceConfigBleName() {
     return storedBleName;
 }
 
+const char* deviceConfigCurrentIp() {
+    if (!loaded) {
+        deviceConfigBegin();
+    }
+    return storedCurrentIp;
+}
+
 String deviceConfigJson() {
     if (!loaded) {
         deviceConfigBegin();
     }
 
     String json;
-    json.reserve(96 + strlen(storedSoftApSsid) + strlen(storedBleName));
+    json.reserve(112 + strlen(storedSoftApSsid) + strlen(storedBleName) + strlen(storedCurrentIp));
     json += "{\"softApSsid\":\"";
     appendJsonEscaped(json, storedSoftApSsid);
     json += "\",\"bleName\":\"";
     appendJsonEscaped(json, storedBleName);
+    json += "\",\"current_ip\":\"";
+    appendJsonEscaped(json, storedCurrentIp);
     json += "\"}";
     return json;
 }

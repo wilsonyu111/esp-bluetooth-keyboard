@@ -23,7 +23,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 24px 16px 40px;
+        padding: 24px 25px 40px;
         box-sizing: border-box;
       }
 
@@ -90,10 +90,6 @@
         font-weight: 600;
       }
 
-      .combo-panel {
-        width: min(720px, 100%);
-        margin-top: 8px;
-      }
 
       .repeat-controls {
         display: flex;
@@ -153,11 +149,6 @@
         color: #f0a0a0;
       }
 
-      .type-panel {
-        width: min(720px, 100%);
-        margin-top: 24px;
-      }
-
       .type-panel textarea {
         width: 100%;
         min-height: 96px;
@@ -203,49 +194,80 @@
     </style>
   </head>
   <body>
-    <div class="main-block">
-      <h1>Controller</h1>
-      <p id="status" class="status unpaired">BLE: checking...</p>
-      <div id="pad" class="pad"></div>
-
-      <div class="type-panel">
-        <h2 class="section-title">Type text</h2>
-        <textarea
-          id="typeText"
-          maxlength="250"
-          rows="4"
-          placeholder="Enter text to type over Bluetooth"
-        ></textarea>
-        <div class="type-toolbar">
-          <span id="typeCount" class="type-count">0 / 250</span>
-          <button type="button" id="typeSend" class="type-send">Send</button>
-        </div>
-      </div>
-
-      <div class="combo-panel">
-        <h2 class="section-title">Combos</h2>
-        <div class="table-wrap">
-          <table class="combo-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Repeats</th>
-                <th>Run</th>
-              </tr>
-            </thead>
-            <tbody id="comboBody">
-              <tr class="combo-empty-row">
-                <td colspan="3" class="combo-empty">No combos saved.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p class="nav">
+    <header class="site-header">
+      <h1 class="site-title">Controller</h1>
+      <nav class="site-nav">
+        <a href="/" class="current">Controller</a>
         <a id="helldiverLink" href="#">Helldiver</a>
         <a id="configLink" href="#">Config</a>
-      </p>
+      </nav>
+      <span class="ble-status-wrap" title="BLE: checking...">
+        <span class="ble-status-label">BLE:</span>
+        <span id="status" class="ble-status unpaired">✕</span>
+      </span>
+    </header>
+
+    <div class="main-block">
+      <section class="panel pad-panel">
+        <div class="panel-header">
+          <h1>Buttons</h1>
+          <button type="button" id="buttonsToggle" class="collapse-btn" aria-expanded="true" aria-controls="buttonsBody">
+            Collapse
+          </button>
+        </div>
+        <div id="buttonsBody" class="panel-body">
+          <div id="pad" class="pad"></div>
+        </div>
+      </section>
+
+      <section class="panel type-panel">
+        <div class="panel-header">
+          <h1>Type text</h1>
+          <button type="button" id="typeToggle" class="collapse-btn" aria-expanded="true" aria-controls="typeBody">
+            Collapse
+          </button>
+        </div>
+        <div id="typeBody" class="panel-body">
+          <textarea
+            id="typeText"
+            maxlength="250"
+            rows="4"
+            placeholder="Enter text to type over Bluetooth"
+          ></textarea>
+          <div class="type-toolbar">
+            <span id="typeCount" class="type-count">0 / 250</span>
+            <button type="button" id="typeSend" class="type-send">Send</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel combo-panel">
+        <div class="panel-header">
+          <h1>Combos</h1>
+          <button type="button" id="combosToggle" class="collapse-btn" aria-expanded="true" aria-controls="combosBody">
+            Collapse
+          </button>
+        </div>
+        <div id="combosBody" class="panel-body">
+          <div class="table-wrap">
+            <table class="combo-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Repeats</th>
+                  <th>Run</th>
+                </tr>
+              </thead>
+              <tbody id="comboBody">
+                <tr class="combo-empty-row">
+                  <td colspan="3" class="combo-empty">No combos saved.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <p id="feedback" class="feedback"></p>
     </div>
 
@@ -514,16 +536,19 @@
           })
           .then(function (data) {
             if (data.paired) {
-              statusEl.textContent = "BLE: paired";
-              statusEl.className = "status paired";
+              statusEl.textContent = "✓";
+              statusEl.className = "ble-status paired";
+              statusEl.parentElement.title = "BLE: paired";
             } else {
-              statusEl.textContent = "BLE: not paired";
-              statusEl.className = "status unpaired";
+              statusEl.textContent = "✕";
+              statusEl.className = "ble-status unpaired";
+              statusEl.parentElement.title = "BLE: not paired";
             }
           })
           .catch(function () {
-            statusEl.textContent = "BLE: status unavailable";
-            statusEl.className = "status unpaired";
+            statusEl.textContent = "✕";
+            statusEl.className = "ble-status unpaired";
+            statusEl.parentElement.title = "BLE: status unavailable";
           });
       }
 
@@ -840,9 +865,26 @@
           });
       }
 
-      typeTextEl.addEventListener("input", updateTypeCount);
-      typeSendEl.addEventListener("click", sendText);
-      updateTypeCount();
+      function bindCollapse(toggleId, bodyId) {
+        var toggle = document.getElementById(toggleId);
+        var body = document.getElementById(bodyId);
+        toggle.addEventListener("click", function () {
+          var open = body.hasAttribute("hidden");
+          if (open) {
+            body.removeAttribute("hidden");
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.textContent = "Collapse";
+          } else {
+            body.setAttribute("hidden", "");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.textContent = "Expand";
+          }
+        });
+      }
+
+      bindCollapse("buttonsToggle", "buttonsBody");
+      bindCollapse("typeToggle", "typeBody");
+      bindCollapse("combosToggle", "combosBody");
 
       typeTextEl.addEventListener("input", updateTypeCount);
       typeSendEl.addEventListener("click", sendText);

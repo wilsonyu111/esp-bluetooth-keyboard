@@ -5,6 +5,7 @@
 #include "messageQueue.h"
 #include "wifi_config.h"
 #include "device_config.h"
+#include "status_led.h"
 #include <HijelHID_BLEKeyboard.h>
 
 AsyncWebServer* server = nullptr;
@@ -535,6 +536,7 @@ static void startSoftApFallback() {
     WiFi.softAP(softApSsid);
     IPAddress apIp(192, 168, 4, 1);
     WiFi.softAPConfig(apIp, apIp, IPAddress(255, 255, 255, 0));
+    statusLedEnableRainbow();
 
     Serial.printf("WiFi: SoftAP fallback SSID: %s, IP: ", softApSsid);
     Serial.println(apIp);
@@ -547,7 +549,9 @@ void startWifiAndServer(bool forceSoftAp) {
     if (forceSoftAp) {
         Serial.println("WiFi: SoftAP forced (double reset)");
         startSoftApFallback();
-    } else if (!connectWifiSta()) {
+    } else if (connectWifiSta()) {
+        deviceConfigSaveCurrentIp(WiFi.localIP().toString().c_str());
+    } else {
         startSoftApFallback();
     }
 

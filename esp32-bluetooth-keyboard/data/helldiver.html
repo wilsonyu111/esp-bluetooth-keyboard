@@ -235,11 +235,21 @@
     </style>
   </head>
   <body>
+    <header class="site-header">
+      <h1 class="site-title">Helldiver</h1>
+      <nav class="site-nav">
+        <a href="/">Controller</a>
+        <a href="/helldiver" class="current">Helldiver</a>
+        <a href="/config">Config</a>
+      </nav>
+      <span class="ble-status-wrap" title="BLE: checking...">
+        <span class="ble-status-label">BLE:</span>
+        <span id="status" class="ble-status unpaired">✕</span>
+      </span>
+    </header>
+
     <div class="main-block">
       <div class="page">
-        <h1>Helldiver</h1>
-        <p id="status" class="status unpaired">BLE: checking...</p>
-
         <div class="settings-row">
           <label>
             Hold time (ms)
@@ -293,10 +303,6 @@
           </div>
         </section>
 
-        <p class="nav">
-          <a href="/">Controller</a>
-          <a href="/config">Config</a>
-        </p>
         <p id="feedback" class="feedback"></p>
       </div>
     </div>
@@ -355,12 +361,14 @@
           })
           .then(function (data) {
             var paired = !!(data && data.paired);
-            statusEl.textContent = paired ? "BLE: paired" : "BLE: unpaired";
-            statusEl.className = "status " + (paired ? "paired" : "unpaired");
+            statusEl.textContent = paired ? "✓" : "✕";
+            statusEl.className = "ble-status " + (paired ? "paired" : "unpaired");
+            statusEl.parentElement.title = paired ? "BLE: paired" : "BLE: unpaired";
           })
           .catch(function () {
-            statusEl.textContent = "BLE: status unavailable";
-            statusEl.className = "status unpaired";
+            statusEl.textContent = "✕";
+            statusEl.className = "ble-status unpaired";
+            statusEl.parentElement.title = "BLE: status unavailable";
           });
       }
 
