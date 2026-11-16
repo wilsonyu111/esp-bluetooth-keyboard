@@ -9,6 +9,6 @@
 void initWebServer(uint16_t port = 80);
 void startWebServer();
 void stopWebServer();
-void startWifiAndServer();
+void startWifiAndServer(bool forceSoftAp = false);
 
 #endif

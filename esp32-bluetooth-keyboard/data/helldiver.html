@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Helldiver Stratagems</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .page {
+        width: min(720px, 100%);
+      }
+
+      .settings-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 8px 0 20px;
+        width: 100%;
+      }
+
+      .settings-row label {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 14px;
+        color: #bbb;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .settings-row input {
+        width: 120px;
+        height: 40px;
+        padding: 4px 10px;
+        border-radius: 4px;
+        border: 1px solid #666;
+        background: #1e1e1e;
+        color: #eee;
+        font-size: 18px;
+      }
+
+      .panel {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 0 0 8px;
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .collapse-btn {
+        appearance: none;
+        border: 1px solid #666;
+        border-radius: 4px;
+        background: #2a2a2a;
+        color: #eee;
+        padding: 6px 12px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .hd-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid #bdb1b1;
+      }
+
+      .hd-table th,
+      .hd-table td {
+        padding: 0;
+        border-bottom: 1px solid #555;
+        vertical-align: middle;
+        text-align: left;
+      }
+
+      .hd-table th {
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #bbb;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .hd-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .hd-table .icon-col {
+        width: 64px;
+      }
+
+      .hd-table .action-col {
+        width: 96px;
+        text-align: right;
+      }
+
+      .hd-table .category-row td {
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #9cf;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .cell-hit {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 56px;
+        box-sizing: border-box;
+        padding: 8px 12px;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .cell-hit:active {
+        background: rgba(58, 122, 85, 0.35);
+      }
+
+      .cell-hit:disabled {
+        cursor: default;
+      }
+
+      .cell-hit:disabled:active {
+        background: transparent;
+      }
+
+      .icon-hit {
+        justify-content: center;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .strat-icon {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        display: block;
+        pointer-events: none;
+      }
+
+      .name-text {
+        pointer-events: none;
+      }
+
+      .row-btn {
+        appearance: none;
+        margin: 8px 12px;
+        padding: 6px 12px;
+        border-radius: 4px;
+        border: 1px solid #666;
+        background: #2a2a2a;
+        color: #eee;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .row-btn.add {
+        border-color: #4a7aaa;
+        background: rgba(40, 90, 140, 0.55);
+      }
+
+      .row-btn.remove {
+        border-color: #8a6a3a;
+        background: rgba(90, 60, 20, 0.75);
+      }
+
+      .row-btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      .empty-row td {
+        padding: 16px 12px;
+        color: #888;
+        font-size: 14px;
+      }
+
+      tr.dragging {
+        opacity: 0.45;
+      }
+
+      tr.drag-over td {
+        box-shadow: inset 0 2px 0 #6aa0d8;
+      }
+
+      .loadout-row {
+        cursor: grab;
+      }
+
+      .loadout-row:active {
+        cursor: grabbing;
+      }
+
+      .hint {
+        margin: 0 0 8px;
+        color: #888;
+        font-size: 13px;
+      }
+
+      .nav {
+        margin-top: 8px;
+      }
+
+      .nav a + a {
+        margin-left: 14px;
+      }
+
+      .available-body[hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-block">
+      <div class="page">
+        <h1>Helldiver</h1>
+        <p id="status" class="status unpaired">BLE: checking...</p>
+
+        <div class="settings-row">
+          <label>
+            Hold time (ms)
+            <input id="holdTime" type="number" min="0" max="65535" step="1" value="100" />
+          </label>
+          <label>
+            Wait after tap (ms)
+            <input id="waitAfterTap" type="number" min="0" max="65535" step="1" value="100" />
+          </label>
+        </div>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Loadout</h2>
+          </div>
+          <p class="hint">Tap icon or name to fire. Drag a row to reorder.</p>
+          <div class="table-wrap">
+            <table class="hd-table">
+              <thead>
+                <tr>
+                  <th class="icon-col">Icon</th>
+                  <th>Name</th>
+                  <th class="action-col">Remove</th>
+                </tr>
+              </thead>
+              <tbody id="loadoutBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Available</h2>
+            <button type="button" id="availableToggle" class="collapse-btn" aria-expanded="false">
+              Expand
+            </button>
+          </div>
+          <div id="availableBody" class="available-body" hidden>
+            <div class="table-wrap">
+              <table class="hd-table">
+                <thead>
+                  <tr>
+                    <th class="icon-col">Icon</th>
+                    <th>Name</th>
+                    <th class="action-col">Add</th>
+                  </tr>
+                </thead>
+                <tbody id="availableTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <p class="nav">
+          <a href="/">Controller</a>
+          <a href="/config">Config</a>
+        </p>
+        <p id="feedback" class="feedback"></p>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "";
+      const CATEGORY_ORDER = ["Offensive", "Supply", "Defensive", "Mission"];
+
+      const statusEl = document.getElementById("status");
+      const holdTimeInput = document.getElementById("holdTime");
+      const waitAfterTapInput = document.getElementById("waitAfterTap");
+      const loadoutBody = document.getElementById("loadoutBody");
+      const availableTableBody = document.getElementById("availableTableBody");
+      const availableBody = document.getElementById("availableBody");
+      const availableToggle = document.getElementById("availableToggle");
+      const feedback = document.getElementById("feedback");
+
+      let combos = [];
+      let loadoutIndexes = [];
+      let suppressFireUntil = 0;
+      let dragFromIndex = -1;
+
+      function comboByIndex(index) {
+        return combos.find(function (c) {
+          return c.index === index;
+        });
+      }
+
+      function timing() {
+        var hold = parseInt(holdTimeInput.value, 10);
+        var wait = parseInt(waitAfterTapInput.value, 10);
+        if (isNaN(hold) || hold < 0) {
+          hold = 100;
+        }
+        if (isNaN(wait) || wait < 0) {
+          wait = 100;
+        }
+        if (hold > 65535) {
+          hold = 65535;
+        }
+        if (wait > 65535) {
+          wait = 65535;
+        }
+        return { holdTime: hold, waitAfterTap: wait };
+      }
+
+      function setFeedback(message, isError) {
+        feedback.textContent = message || "";
+        feedback.classList.toggle("error", !!isError);
+      }
+
+      function refreshStatus() {
+        fetch(API_BASE + "/status")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (data) {
+            var paired = !!(data && data.paired);
+            statusEl.textContent = paired ? "BLE: paired" : "BLE: unpaired";
+            statusEl.className = "status " + (paired ? "paired" : "unpaired");
+          })
+          .catch(function () {
+            statusEl.textContent = "BLE: status unavailable";
+            statusEl.className = "status unpaired";
+          });
+      }
+
+      function fireCombo(index) {
+        if (Date.now() < suppressFireUntil) {
+          return;
+        }
+        var combo = comboByIndex(index);
+        if (!combo) {
+          return;
+        }
+        var t = timing();
+        var params = new URLSearchParams();
+        params.set("index", String(index));
+        params.set("holdTime", String(t.holdTime));
+        params.set("waitAfterTap", String(t.waitAfterTap));
+
+        setFeedback("Firing " + combo.name + "...", false);
+        fetch(API_BASE + "/api/helldiver_fire", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: params.toString(),
+        })
+          .then(function (response) {
+            return response.json().then(function (data) {
+              return { ok: response.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (result.ok && result.data && result.data.ok) {
+              setFeedback("Fired " + combo.name, false);
+              return;
+            }
+            var err =
+              result.data && result.data.error ? result.data.error : "fire_failed";
+            setFeedback("Fire failed: " + err, true);
+          })
+          .catch(function () {
+            setFeedback("Fire failed", true);
+          });
+      }
+
+      function addToLoadout(index) {
+        if (loadoutIndexes.indexOf(index) !== -1) {
+          setFeedback("Already in loadout", true);
+          return;
+        }
+        loadoutIndexes.push(index);
+        renderAll();
+        setFeedback("Added to loadout", false);
+      }
+
+      function removeFromLoadout(index) {
+        loadoutIndexes = loadoutIndexes.filter(function (i) {
+          return i !== index;
+        });
+        renderAll();
+        setFeedback("Removed from loadout", false);
+      }
+
+      function renderLoadout() {
+        if (!loadoutIndexes.length) {
+          loadoutBody.innerHTML =
+            '<tr class="empty-row"><td colspan="3">No stratagems in loadout. Expand Available and tap Add.</td></tr>';
+          return;
+        }
+
+        var html = "";
+        loadoutIndexes.forEach(function (index, rowPos) {
+          var combo = comboByIndex(index);
+          if (!combo) {
+            return;
+          }
+          html +=
+            '<tr class="loadout-row" draggable="true" data-loadout-pos="' +
+            rowPos +
+            '" data-index="' +
+            combo.index +
+            '">' +
+            '<td class="icon-col">' +
+            '<button type="button" class="cell-hit icon-hit" data-fire="' +
+            combo.index +
+            '">' +
+            '<img class="strat-icon" src="' +
+            combo.icon +
+            '" alt="" />' +
+            "</button>" +
+            "</td>" +
+            "<td>" +
+            '<button type="button" class="cell-hit" data-fire="' +
+            combo.index +
+            '">' +
+            '<span class="name-text">' +
+            escapeHtml(combo.name) +
+            "</span>" +
+            "</button>" +
+            "</td>" +
+            '<td class="action-col">' +
+            '<button type="button" class="row-btn remove" data-remove="' +
+            combo.index +
+            '">Remove</button>' +
+            "</td>" +
+            "</tr>";
+        });
+        loadoutBody.innerHTML = html;
+      }
+
+      function renderAvailable() {
+        var inLoadout = {};
+        loadoutIndexes.forEach(function (i) {
+          inLoadout[i] = true;
+        });
+
+        var byCategory = {};
+        CATEGORY_ORDER.forEach(function (cat) {
+          byCategory[cat] = [];
+        });
+        combos.forEach(function (combo) {
+          if (!byCategory[combo.category]) {
+            byCategory[combo.category] = [];
+          }
+          byCategory[combo.category].push(combo);
+        });
+
+        var html = "";
+        CATEGORY_ORDER.forEach(function (cat) {
+          var list = byCategory[cat] || [];
+          if (!list.length) {
+            return;
+          }
+          html +=
+            '<tr class="category-row"><td colspan="3">' +
+            escapeHtml(cat) +
+            "</td></tr>";
+          list.forEach(function (combo) {
+            var disabled = inLoadout[combo.index] ? " disabled" : "";
+            html +=
+              "<tr>" +
+              '<td class="icon-col">' +
+              '<div class="cell-hit icon-hit" style="cursor:default">' +
+              '<img class="strat-icon" src="' +
+              combo.icon +
+              '" alt="" />' +
+              "</div>" +
+              "</td>" +
+              "<td>" +
+              '<div class="cell-hit" style="cursor:default">' +
+              '<span class="name-text">' +
+              escapeHtml(combo.name) +
+              "</span>" +
+              "</div>" +
+              "</td>" +
+              '<td class="action-col">' +
+              '<button type="button" class="row-btn add" data-add="' +
+              combo.index +
+              '"' +
+              disabled +
+              ">Add</button>" +
+              "</td>" +
+              "</tr>";
+          });
+        });
+        availableTableBody.innerHTML = html;
+      }
+
+      function renderAll() {
+        renderLoadout();
+        renderAvailable();
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      availableToggle.addEventListener("click", function () {
+        var open = availableBody.hasAttribute("hidden");
+        if (open) {
+          availableBody.removeAttribute("hidden");
+          availableToggle.setAttribute("aria-expanded", "true");
+          availableToggle.textContent = "Collapse";
+        } else {
+          availableBody.setAttribute("hidden", "");
+          availableToggle.setAttribute("aria-expanded", "false");
+          availableToggle.textContent = "Expand";
+        }
+      });
+
+      loadoutBody.addEventListener("click", function (event) {
+        var fireBtn = event.target.closest("[data-fire]");
+        if (fireBtn) {
+          fireCombo(parseInt(fireBtn.getAttribute("data-fire"), 10));
+          return;
+        }
+        var removeBtn = event.target.closest("[data-remove]");
+        if (removeBtn) {
+          removeFromLoadout(parseInt(removeBtn.getAttribute("data-remove"), 10));
+        }
+      });
+
+      availableTableBody.addEventListener("click", function (event) {
+        var addBtn = event.target.closest("[data-add]");
+        if (!addBtn || addBtn.disabled) {
+          return;
+        }
+        addToLoadout(parseInt(addBtn.getAttribute("data-add"), 10));
+      });
+
+      loadoutBody.addEventListener("dragstart", function (event) {
+        var row = event.target.closest("tr.loadout-row");
+        if (!row) {
+          return;
+        }
+        dragFromIndex = parseInt(row.getAttribute("data-loadout-pos"), 10);
+        row.classList.add("dragging");
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", String(dragFromIndex));
+      });
+
+      loadoutBody.addEventListener("dragend", function (event) {
+        var row = event.target.closest("tr.loadout-row");
+        if (row) {
+          row.classList.remove("dragging");
+        }
+        Array.prototype.forEach.call(loadoutBody.querySelectorAll("tr.drag-over"), function (r) {
+          r.classList.remove("drag-over");
+        });
+        suppressFireUntil = Date.now() + 250;
+        dragFromIndex = -1;
+      });
+
+      loadoutBody.addEventListener("dragover", function (event) {
+        event.preventDefault();
+        var row = event.target.closest("tr.loadout-row");
+        Array.prototype.forEach.call(loadoutBody.querySelectorAll("tr.drag-over"), function (r) {
+          r.classList.remove("drag-over");
+        });
+        if (row) {
+          row.classList.add("drag-over");
+        }
+      });
+
+      loadoutBody.addEventListener("drop", function (event) {
+        event.preventDefault();
+        var row = event.target.closest("tr.loadout-row");
+        if (!row || dragFromIndex < 0) {
+          return;
+        }
+        var toPos = parseInt(row.getAttribute("data-loadout-pos"), 10);
+        if (toPos === dragFromIndex) {
+          return;
+        }
+        var moved = loadoutIndexes.splice(dragFromIndex, 1)[0];
+        loadoutIndexes.splice(toPos, 0, moved);
+        suppressFireUntil = Date.now() + 250;
+        renderAll();
+      });
+
+      fetch(API_BASE + "/api/helldiver")
+        .then(function (r) {
+          return r.json();
+        })
+        .then(function (data) {
+          combos = (data && data.combos) || [];
+          renderAll();
+        })
+        .catch(function () {
+          setFeedback("Failed to load stratagems", true);
+          renderAll();
+        });
+
+      refreshStatus();
+      setInterval(refreshStatus, 3000);
+    </script>
+  </body>
+</html>

@@ -54,6 +54,10 @@ h1 {
   color: #6aa0d8;
 }
 
+.nav a + a {
+  margin-left: 14px;
+}
+
 .table-wrap {
   width: auto;
   overflow-x: auto;
